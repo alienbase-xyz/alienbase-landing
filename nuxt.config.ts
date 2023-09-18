@@ -9,10 +9,6 @@ export default defineNuxtConfig({
           href: "/favicon/favicon.ico",
         },
         {
-          rel: "manifest",
-          href: "/favicon/site.webmanifest",
-        },
-        {
           rel: "apple-touch-icon",
           href: "/favicon/apple-touch-icon.png",
         },
@@ -26,10 +22,27 @@ export default defineNuxtConfig({
           type: "image/png",
           href: "/favicon/favicon-16x16.png",
         },
+        {
+          rel: "manifest",
+          href: "/favicon/site.webmanifest",
+        },
       ],
       script: [
         {
           src: "https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js",
+        },
+        {
+          src: "https://unpkg.com/split-type",
+        },
+        {
+          src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js",
+        },
+        {
+          src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/ScrollTrigger.min.js",
+        },
+        {
+          src: "/js/animations.js",
+          tagPosition: "bodyClose",
         },
         {
           src: "/js/lenis.js",

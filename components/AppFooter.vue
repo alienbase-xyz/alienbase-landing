@@ -12,6 +12,8 @@
         to="https://t.me/alienbaseDEX"
         title="Telegram Group"
         target="_blank"
+        class="hover:opacity-60"
+        style="transition: all 0.3s"
       >
         <IconsTelegram />
       </NuxtLink>

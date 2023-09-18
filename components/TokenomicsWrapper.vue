@@ -28,7 +28,7 @@
           class="navigator-steps h-full w-9px px-20px flex flex-col-reverse items-center justify-between py-20px"
         >
           <div
-            class="step w-7px h-7px rounded-7px"
+            class="step rounded-7px"
             :class="{
               'bg-body': i <= step,
               'bg-outline': i > step,
@@ -99,7 +99,7 @@
             }"
           >
             <h2
-              class="text-32px <md:text-18px text-center gradient font-bold uppercase md:whitespace-nowrap"
+              class="text-32px <md:text-18px text-center gradient font-bold uppercase whitespace-nowrap"
               v-for="s in sections"
             >
               {{ s.title }}

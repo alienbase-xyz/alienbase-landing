@@ -1,11 +1,11 @@
 <template>
   <div
-    class="grid-container w-full max-w-1000px flex flex-col items-start justify-start gap-20px"
+    class="cards-trigger grid-container w-full max-w-1000px flex flex-col items-start justify-start gap-20px"
   >
     <GridCard
       title="Earn on AlienBase"
       to="https://app.alienbase.xyz/"
-      class="md:(h-420px gap-0px) <md:gap-20px flex flex-col items-center justify-center"
+      class="earn-feature md:(h-420px gap-0px) <md:gap-20px flex flex-col items-center justify-center"
     >
       <AppImg
         src="/img/earn.png"
@@ -28,7 +28,7 @@
       <GridCard
         title="Farm on AlienBase"
         to="https://app.alienbase.xyz/farms"
-        class="md:h-660px flex flex-col items-center jusitfy-center gap-48px"
+        class="farm-feature md:h-660px flex flex-col items-center jusitfy-center gap-48px"
       >
         <AppImg
           src="/img/farm.png"
@@ -50,7 +50,7 @@
           title="Stake on AlienBase"
           to="https://app.alienbase.xyz/"
           :padding-bottom="false"
-          class="md:h-320px flex flex-col items-start justify-center gap-48px"
+          class="stake-feature md:h-320px flex flex-col items-start justify-center gap-48px"
         >
           <AppImg
             src="/img/stake.png"
@@ -63,7 +63,7 @@
           title="Dual Farm Rewards on AlienBase"
           to="https://app.alienbase.xyz/"
           :padding-bottom="false"
-          class="md:h-320px flex flex-col items-start justify-between gap-48px"
+          class="dual-rewards-feature md:h-320px flex flex-col items-start justify-between gap-48px"
         >
           <AppImg
             src="/img/rewards.png"

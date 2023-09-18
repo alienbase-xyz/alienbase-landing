@@ -1,6 +1,6 @@
 <template>
   <div
-    class="home-wrapper w-full mt-200px flex flex-col items-center justify-start gap-100px"
+    class="home-wrapper w-full pt-200px flex flex-col items-center justify-start gap-100px"
   >
     <div class="hero w-full flex flex-col items-center justify-start gap-120px">
       <section
@@ -67,11 +67,13 @@
       </section>
     </div>
     <section
-      class="w-full flex flex-col items-center justify-start gap-40px default-layout-padding"
+      class="trade-trigger w-full flex flex-col items-center justify-start gap-40px default-layout-padding"
     >
-      <p class="text-32px text-headline font-medium text-center">
-        Trade <br class="md:hidden" />
-        with confidence
+      <p
+        class="trade-confident text-32px text-headline font-medium text-center"
+      >
+        <span>Trade</span>&NonBreakingSpace;<br class="md:hidden" />
+        <span>with</span>&NonBreakingSpace;<span>confidence</span>
       </p>
       <GridLayout />
     </section>
@@ -185,9 +187,11 @@
       </div>
     </section> -->
     <section
-      class="w-full default-layout-padding flex flex-col items-center justify-start gap-42px"
+      class="area-51-trigger w-full default-layout-padding flex flex-col items-center justify-start gap-42px"
     >
-      <AppImg src="/img/meet-a51.png" alt="Meet Area51" />
+      <div class="img-container area-51-tokens">
+        <AppImg src="/img/meet-a51.png" alt="Meet Area51" />
+      </div>
       <header
         class="w-full flex flex-col md:items-center justify-start gap-20px md:text-center"
       >
@@ -215,17 +219,24 @@
       class="w-full min-h-700px flex flex-col items-center justify-end relative mt-50px"
     >
       <div
-        class="image-container absolute transform <lg:hidden"
+        class="image-container w-1920px absolute transform <lg:hidden grid place-items-center"
         style="z-index: -1"
       >
-        <AppImg
-          src="/img/meet-alb.png"
-          alt="Meet ALB Token on AlienBase"
-          class-name="min-w-1920px max-w-1920px transform translate-y-[0%]"
-        />
+        <div class="relative w-full max-w-1920px h-1067px">
+          <AppImg
+            src="/img/meet-alb-details.png"
+            alt="ALB tokens in space"
+            class-name="alb-stars absolute min-w-1920px max-w-1920px transform translate-y-0"
+          />
+          <AppImg
+            src="/img/meet-alb.png"
+            alt="Meet ALB Token on AlienBase"
+            class-name="alb-token absolute min-w-1920px max-w-1920px transform translate-y-[0%]"
+          />
+        </div>
       </div>
       <main
-        class="w-full default-layout-padding flex flex-row <md:items-start <lg:(flex-col items-center gap-32px) items-stretch justify-center gap-100px"
+        class="alb-stars-trigger w-full default-layout-padding flex flex-row <md:items-start <lg:(flex-col items-center gap-32px) items-stretch justify-center gap-100px"
       >
         <div
           class="flex flex-col <md:items-start <lg:(items-center w-full) justify-between gap-32px"
@@ -234,6 +245,7 @@
             <AppImg
               src="/img/meet-alb-mobile.png"
               alt="Meet ALB Token on AlienBase"
+              class-name="alb-token"
             />
           </div>
           <header
@@ -395,6 +407,12 @@ const partners = ref([
   },
 ]);
 
+useHead({
+  htmlAttrs: {
+    lang: "en",
+  },
+});
+
 useSeoMeta({
   title: AppConfigs.title,
   description: AppConfigs.description,
@@ -507,21 +525,25 @@ const ALBData = ref<ALBData[][]>([
   background-image: url(/img/hero-illustration.png);
   background-repeat: no-repeat;
   background-size: 954px;
-  background-position: center -2%;
+  background-position: center 9%;
+
+  @media screen and (min-width: 500px) {
+    background-position: center 6%;
+  }
 
   @media screen and (min-width: 765px) {
     background-size: 2154px;
-    background-position: center -105%;
+    background-position: center -43%;
   }
 
   @media screen and (min-width: 1024px) {
     background-size: 2154px;
-    background-position: center -110%;
+    background-position: center -38%;
   }
 
   @media screen and (min-width: 1408px) {
     background-size: 2504px;
-    background-position: center -380%;
+    background-position: center -100%;
   }
 }
 </style>
