@@ -1,6 +1,7 @@
 <template>
   <div class="layout-container h-full max-w-screen overflow-clip">
     <AppHeader />
+    <AppMenu />
     <NuxtPage />
     <AppFooter />
   </div>

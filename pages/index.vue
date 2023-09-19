@@ -100,13 +100,14 @@
       </header>
       <div class="w-full max-w-screen relative">
         <div
-          class="default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
+          class="farms-scroll-container default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
         >
           <FarmCard
-            v-for="(farm, i) in farms"
-            :key="i"
             :name="farm.name"
-            :icons="['https://app.alienbase.xyz/logo.png']"
+            :icons="[
+              'https://app.alienbase.xyz/logo.png',
+              'https://app.alienbase.xyz/logo.png',
+            ]"
             :multipler="farm.multiplier"
             earn="alb"
             :liquidity="Number(farm.liquidity)"
@@ -114,11 +115,33 @@
             :apr="Number(farm.apr)"
             :contract="farm.contract"
             to="asd"
+            v-for="(farm, i) in farms"
+            :key="i"
           />
         </div>
         <div
-          class="h-full w-200px <md:hidden absolute right-0 top-0"
+          class="h-full w-200px <md:hidden absolute left-0 top-0 pointer-events-none select-none"
+          :class="{
+            'opacity-0': farmScrollPosition < 200,
+            'opacity-100': farmScrollPosition >= 200,
+          }"
           style="
+            transition: all 0.3s;
+            background: linear-gradient(
+              90deg,
+              #010814 2.71%,
+              rgba(1, 8, 20, 0) 95.79%
+            );
+          "
+        ></div>
+        <div
+          class="h-full w-200px <md:hidden absolute right-0 top-0 pointer-events-none select-none"
+          :class="{
+            'opacity-0': farmScrollPosition >= 3200,
+            'opacity-100': farmScrollPosition < 3200,
+          }"
+          style="
+            transition: all 0.3s;
             background: linear-gradient(
               274deg,
               #010814 2.71%,
@@ -282,7 +305,7 @@
       <header
         class="text-center flex flex-col items-center justify-start gap-14px"
       >
-        <p class="text-32px text-headline font-medium">Tokenomics</p>
+        <p class="text-32px text-headline font-medium">Roadmap</p>
         <p class="text-18px text-body font-medium leading-[140%]">
           We landed on Earh, but we're going to the Moon
         </p>
@@ -379,6 +402,16 @@ interface ALBData {
   name: string;
 }
 
+interface ALBFarm {
+  pid: number;
+  name: string;
+  contract: string;
+  multiplier: string;
+  reward: null | string;
+  liquidity: number;
+  apr: string;
+}
+
 const {
   data: albMarket,
   status: albMarketStatus,
@@ -387,6 +420,7 @@ const {
   "alb-market",
   () => $fetch("https://api.coingecko.com/api/v3/coins/alienbase"),
   {
+    immediate: true,
     transform: (v: any) => {
       return {
         price: v.market_data.current_price.usd.toFixed(5),
@@ -411,6 +445,7 @@ const {
       }
     ),
   {
+    immediate: true,
     transform: (v: any) => {
       return {
         total: v.totalSupply,
@@ -428,26 +463,29 @@ const {
   "alb-farms",
   () =>
     $fetch(
-      `https://4nsrsfaan2.execute-api.eu-central-1.amazonaws.com/prod/farms`,
+      "https://4nsrsfaan2.execute-api.eu-central-1.amazonaws.com/prod/farms",
       {
         mode: "no-cors",
       }
     ),
   {
-    transform: (v: object[]) => {
-      return v.map((el: any) => ({
-        pid: el.pid,
-        name: el.lpSymbol,
-        contract: el.lpAddress,
-        multiplier: el.multiplier,
-        reward: el.extraTokenSymbol || null,
-        liquidity: Number(
-          (
-            Number(el.lpTotalInQuoteToken) * Number(el.quoteTokenPriceBusd)
-          ).toFixed(0)
-        ),
-        apr: el.apr.toFixed(2),
-      }));
+    immediate: true,
+    transform: (v: object[]): ALBFarm[] => {
+      return v.map(
+        (el: any): ALBFarm => ({
+          pid: el.pid,
+          name: el.lpSymbol,
+          contract: el.lpAddress,
+          multiplier: el.multiplier,
+          reward: el.extraTokenSymbol || null,
+          liquidity: Number(
+            (
+              Number(el.lpTotalInQuoteToken) * Number(el.quoteTokenPriceBusd)
+            ).toFixed(0)
+          ),
+          apr: el.apr.toFixed(2),
+        })
+      );
     },
   }
 );
@@ -496,6 +534,19 @@ const ALBData = ref<ALBData[][]>([
     },
   ],
 ]);
+
+const farmScrollPosition = ref(0);
+
+onMounted(() => {
+  const farmsContainer = document.querySelector(
+    ".farms-scroll-container"
+  ) as HTMLElement;
+  farmsContainer.addEventListener("scroll", (e: Event) => {
+    const container = e.target as HTMLElement;
+    farmScrollPosition.value = container.scrollLeft;
+    console.log(farmScrollPosition.value, container.getBoundingClientRect());
+  });
+});
 </script>
 
 <style lang="scss" scoped>

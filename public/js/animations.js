@@ -83,8 +83,8 @@ window.addEventListener("DOMContentLoaded", () => {
     delay: 0.5,
     scrollTrigger: {
       trigger: ".cards-trigger",
-      start: "center-=100px center+=100px",
-      end: "bottom bottom",
+      start: "20% center+=100px",
+      end: "60% 80%",
       scrub: 1,
       /* markers: true, */
     },
