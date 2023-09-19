@@ -11,11 +11,15 @@
             bringing alien tech<br />
             to humans
           </Typo>
-          <Typo role="body" class-name="text-body text-center">
+          <Typo role="body" class-name="h1-paragraph text-body text-center">
             Trade, earn and get rewarded for holding ALB
           </Typo>
         </div>
-        <NuxtLink to="https://app.alienbase.xyz/" title="Trade Now">
+        <NuxtLink
+          to="https://app.alienbase.xyz/"
+          class="hero-cta"
+          title="Trade Now"
+        >
           <AppButton>trade now</AppButton>
         </NuxtLink>
       </section>
@@ -24,7 +28,7 @@
       >
         <div class="flex flex-col items-center justify-start gap-10px">
           <IconsStar class="journey-star" />
-          <Typo role="h2" class-name="text-center" gradient>
+          <Typo role="h2" class-name="journey-title text-center" gradient>
             Join our journey to the stars
           </Typo>
         </div>
@@ -36,8 +40,8 @@
           >
             <Typo role="h2" gradient>$18.59M</Typo>
             <Typo role="body" class-name="text-body">
-              Total Liquidity <span class="text-green">+31.74%</span></Typo
-            >
+              Total Liquidity <span class="text-green">+31.74%</span>
+            </Typo>
           </div>
           <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px border-[#EEF0F4] <lg:(border-b-1px) border-opacity-10"
@@ -81,7 +85,7 @@
   <div
     class="w-full flex flex-col items-center jusitfy-start mt-100px gap-124px"
   >
-    <!-- <section class="w-full flex flex-col gap-40px">
+    <section class="w-full flex flex-col gap-40px">
       <header
         class="default-layout-padding flex flex-col items-center justify-start gap-20px"
       >
@@ -99,78 +103,16 @@
           class="default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
         >
           <FarmCard
-            name="alb"
+            v-for="(farm, i) in farms"
+            :key="i"
+            :name="farm.name"
             :icons="['https://app.alienbase.xyz/logo.png']"
-            :multipler="2.24"
+            :multipler="farm.multiplier"
             earn="alb"
-            :liquidity="368.856"
-            :apr="442.79"
-            contract="asd"
-            to="asd"
-          />
-          <FarmCard
-            name="alb"
-            :icons="[
-              'https://app.alienbase.xyz/logo.png',
-              'https://app.alienbase.xyz/logo.png',
-            ]"
-            :multipler="2.24"
-            earn="alb"
-            :liquidity="368.856"
-            :apr="442.79"
-            contract="asd"
-            to="asd"
-          />
-          <FarmCard
-            name="alb"
-            :icons="[
-              'https://app.alienbase.xyz/logo.png',
-              'https://app.alienbase.xyz/logo.png',
-            ]"
-            :multipler="2.24"
-            earn="alb"
-            :liquidity="368.856"
-            :apr="442.79"
-            contract="asd"
-            to="asd"
-          />
-          <FarmCard
-            name="alb"
-            :icons="[
-              'https://app.alienbase.xyz/logo.png',
-              'https://app.alienbase.xyz/logo.png',
-            ]"
-            :multipler="2.24"
-            earn="alb"
-            :liquidity="368.856"
-            :apr="442.79"
-            contract="asd"
-            to="asd"
-          />
-          <FarmCard
-            name="alb"
-            :icons="[
-              'https://app.alienbase.xyz/logo.png',
-              'https://app.alienbase.xyz/logo.png',
-            ]"
-            :multipler="2.24"
-            earn="alb"
-            :liquidity="368.856"
-            :apr="442.79"
-            contract="asd"
-            to="asd"
-          />
-          <FarmCard
-            name="alb"
-            :icons="[
-              'https://app.alienbase.xyz/logo.png',
-              'https://app.alienbase.xyz/logo.png',
-            ]"
-            :multipler="2.24"
-            earn="alb"
-            :liquidity="368.856"
-            :apr="442.79"
-            contract="asd"
+            :liquidity="Number(farm.liquidity)"
+            :rewards="farm.reward"
+            :apr="Number(farm.apr)"
+            :contract="farm.contract"
             to="asd"
           />
         </div>
@@ -185,7 +127,7 @@
           "
         ></div>
       </div>
-    </section> -->
+    </section>
     <section
       class="area-51-trigger w-full default-layout-padding flex flex-col items-center justify-start gap-42px"
     >
@@ -354,7 +296,7 @@
       </div>
     </section>
     <section
-      class="w-full flex flex-col items-center justify-center gap-40px default-layout-padding"
+      class="partners-trigger w-full flex flex-col items-center justify-center gap-40px default-layout-padding"
     >
       <header
         class="text-center flex flex-col items-center justify-start gap-14px"
@@ -366,9 +308,13 @@
         </p>
       </header>
       <ul
-        class="flex flex-row items-center justify-center gap-60px <lg:flex-col"
+        class="partners flex flex-row items-center justify-center gap-60px <lg:flex-col"
       >
-        <li class="max-h-45px" v-for="partner in partners" :key="partner.name">
+        <li
+          class="partner max-h-45px"
+          v-for="partner in partners"
+          :key="partner.name"
+        >
           <AppImg
             :alt="partner.name"
             :src="partner.img"
@@ -470,6 +416,38 @@ const {
         total: v.totalSupply,
         circulating: v.circulatingSupply,
       };
+    },
+  }
+);
+
+const {
+  data: farms,
+  status: farmStatus,
+  refresh: refreshFarms,
+} = await useAsyncData(
+  "alb-farms",
+  () =>
+    $fetch(
+      `https://4nsrsfaan2.execute-api.eu-central-1.amazonaws.com/prod/farms`,
+      {
+        mode: "no-cors",
+      }
+    ),
+  {
+    transform: (v: object[]) => {
+      return v.map((el: any) => ({
+        pid: el.pid,
+        name: el.lpSymbol,
+        contract: el.lpAddress,
+        multiplier: el.multiplier,
+        reward: el.extraTokenSymbol || null,
+        liquidity: Number(
+          (
+            Number(el.lpTotalInQuoteToken) * Number(el.quoteTokenPriceBusd)
+          ).toFixed(0)
+        ),
+        apr: el.apr.toFixed(2),
+      }));
     },
   }
 );

@@ -79,7 +79,7 @@
     <div
       class="absolute bottom-0 left-[50%] transform translate-x-[-50%] flex flex-col items-center justify-center gap-20px pb-20px md:pb-50px <md:w-full"
     >
-      <div class="icon-container">
+      <div class="rocket-container" :class="status">
         <IconsRocket />
       </div>
       <header
@@ -200,12 +200,38 @@ const sections = ref<Section[]>([
   },
 ]);
 const step = ref<number>(0);
+const status = ref<"idle" | "next" | "prev">("idle");
 
 const goToStep = (dir: number) => {
   if (dir == -1 && step.value == 0) return; // Can't go back
   if (dir == 1 && sections.value.length - 1 == step.value) return; // Can't continue
   step.value += dir;
+  if (dir > 0) {
+    status.value = "next";
+  } else {
+    status.value = "prev";
+  }
 };
+
+watch(status, (v) => {
+  if (v != "idle") {
+    setTimeout(() => {
+      status.value = "idle";
+    }, 500);
+  }
+});
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.rocket-container {
+  transition: transform 1s;
+
+  &.idle {
+    transform: translateY(10px);
+  }
+
+  &.next {
+    transform: translateY(-30px);
+  }
+}
+</style>

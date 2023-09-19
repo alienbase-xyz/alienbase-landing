@@ -36,7 +36,8 @@ button {
     box-shadow: 0 3px 0 rgba(64, 140, 255, 0.5) inset, 0 -3px 0 #0047b2 inset;
 
     &:hover {
-      box-shadow: 0 -3spx 0 rgba(64, 140, 255, 0.5) inset, 0 3px 0 #0047b2 inset;
+      box-shadow: 0 3px 0 rgba(64, 140, 255, 0.5) inset, 0 -3px 0 #0047b2 inset,
+        0 5px 30px rgba(64, 140, 255, 0.2);
       background: linear-gradient(
         180deg,
         rgba(4, 104, 255, 0.8) 0%,

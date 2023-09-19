@@ -34,7 +34,7 @@
       <p
         class="pin px-10px py-9px rounded-50px text-14px text-white bg-[#1E2531]"
       >
-        x{{ props.multipler }}
+        {{ props.multipler }}
       </p>
     </header>
     <ul class="w-full flex flex-col items-center justify-start gap-0px px-30px">
@@ -43,7 +43,9 @@
       >
         <p class="text-14px text-body font-medium">Earn</p>
         <p class="text-18px text-headline font-medium uppercase">
-          {{ props.earn }}
+          {{
+            [props.earn, props.rewards].filter((el) => el != null).join(", ")
+          }}
         </p>
       </li>
       <li
@@ -51,7 +53,7 @@
       >
         <p class="text-14px text-body font-medium">Total Liquidity</p>
         <p class="text-18px text-headline font-medium uppercase">
-          ${{ props.liquidity }}
+          ${{ props.liquidity / 1000 }}
         </p>
       </li>
       <li
@@ -64,10 +66,13 @@
       </li>
       <li class="w-full">
         <NuxtLink
-          :to="`${props.contract}`"
-          class="flex flex-row items-center justify-between gap-32px py-20px"
+          target="_blank"
+          :to="`https://basescan.org/address/${props.contract}`"
+          class="flex flex-row items-center justify-between gap-32px py-20px text-headline hover:(opacity-50)"
+          style="transition: all 0.3s"
         >
-          <p class="text-16px text-headline font-medium">View Contract</p>
+          <p class="text-16px font-medium">View Contract</p>
+          <IcOutlineArrowRight />
         </NuxtLink>
       </li>
     </ul>
@@ -78,12 +83,15 @@
 </template>
 
 <script lang="ts" setup>
+import IcOutlineArrowRight from "~icons/ic/outline-arrow-forward";
+
 interface Props {
   name: string;
   icons: string[];
-  multipler: number;
+  multipler: string;
   earn: string;
   liquidity: number;
+  rewards?: string;
   apr: number;
   contract: string;
   to: string;
