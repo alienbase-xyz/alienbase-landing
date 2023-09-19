@@ -15,6 +15,13 @@ gsap.from(".trade-confident span", {
   },
 });
 
+gsap.from(".journey-star", {
+  y: "30px",
+  opacity: 0,
+  duration: 0.6,
+  delay: 1.4,
+});
+
 gsap.from(".nav-wrapper", {
   y: "-100%",
   duration: 1,

@@ -23,7 +23,7 @@
         class="w-full flex flex-col items-center justify-start gap-40px default-layout-padding"
       >
         <div class="flex flex-col items-center justify-start gap-10px">
-          <IconsStar />
+          <IconsStar class="journey-star" />
           <Typo role="h2" class-name="text-center" gradient>
             Join our journey to the stars
           </Typo>
