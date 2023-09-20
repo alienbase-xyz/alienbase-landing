@@ -43,9 +43,7 @@
       >
         <p class="text-14px text-body font-medium">Earn</p>
         <p class="text-18px text-headline font-medium uppercase">
-          {{
-            [props.earn, props.rewards].filter((el) => el != null).join(", ")
-          }}
+          {{ ["ALB", props.rewards].filter((el) => el != null).join(", ") }}
         </p>
       </li>
       <li
@@ -76,9 +74,14 @@
         </NuxtLink>
       </li>
     </ul>
-    <div class="px-20px pb-20px w-full">
+    <NuxtLink
+      :to="props.to"
+      :title="`Get ${props.name}`"
+      target="_blank"
+      class="px-20px pb-20px w-full"
+    >
       <AppButton type="tertiary" class="w-full">Get {{ props.name }}</AppButton>
-    </div>
+    </NuxtLink>
   </div>
 </template>
 
@@ -89,7 +92,6 @@ interface Props {
   name: string;
   icons: string[];
   multipler: string;
-  earn: string;
   liquidity: number;
   rewards?: string;
   apr: number;

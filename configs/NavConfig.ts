@@ -13,7 +13,7 @@ export const NavConfigs = [
     },
     {
         name: "Discord",
-        to: "https://discord.gg/U9kWezx9XZs",
+        to: "https://discord.gg/q9vFy6GwFx",
     },
     {
         name: "Telegram",

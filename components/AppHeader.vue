@@ -7,11 +7,11 @@
       class="w-full h-full relative flex flex-row items-center justify-between default-layout-padding bg-[##0e1218] bg-opacity-20 backdrop-filter backdrop-blur-4px"
     >
       <div
-        class="area flex flex-row gap-0 items-center justify-start rounded-10px border-1px border-outline h-40px"
+        class="area lg:h-54px h-40px flex flex-row gap-0 items-center justify-start rounded-10px border-1px border-outline"
       >
         <NuxtLink
-          class="flex flex-row items-center justify-center gap-8px p-8px border-b-2px border-[#0358D8] rounded-bl-10px"
-          to="https://alienbase.xyz"
+          class="h-full flex flex-row items-center justify-center gap-8px lg:(px-15px py-12px) p-8px border-b-2px border-[#0358D8] rounded-bl-10px"
+          to="/"
         >
           <div class="icon-container w-24px h-24px">
             <IconsAlienBase />
@@ -24,7 +24,7 @@
           </p>
         </NuxtLink>
         <NuxtLink
-          class="flex flex-row items-center justify-center gap-8px p-8px border-l-1px border-outline rounded-br-10px opacity-50 hover:opacity-100"
+          class="h-full flex flex-row items-center justify-center gap-8px lg:(px-15px py-12px) p-8px border-l-1px border-outline rounded-br-10px opacity-50 hover:opacity-100"
           style="transition: all 0.3s"
           to="https://area51.alienbase.xyz/"
         >
@@ -59,9 +59,13 @@
           </NuxtLink>
         </li>
       </ul>
-      <div class="cta-wrapper <lg:hidden">
-        <AppButton>Trade Now</AppButton>
-      </div>
+      <NuxtLink
+        to="https://app.alienbase.xyz/"
+        title="Trade Now"
+        class="cta-wrapper <lg:hidden"
+      >
+        <AppButton type="tertiary">Trade Now</AppButton>
+      </NuxtLink>
       <button
         class="menu-wrapper min-w-44px w-44px h-44px rounded-10px grid place-items-center cursor-pointer lg:hidden"
         :class="{

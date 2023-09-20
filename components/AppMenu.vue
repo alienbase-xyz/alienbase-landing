@@ -21,8 +21,8 @@
         </NuxtLink>
       </li>
       <li class="w-full px-20px my-12px">
-        <NuxtLink to="https://app.alienbase.xzy/">
-          <AppButton small>Trade now</AppButton>
+        <NuxtLink to="https://app.alienbase.xzy/" title="Trade Now">
+          <AppButton type="tertiary" small>Trade now</AppButton>
         </NuxtLink>
       </li>
     </ul>

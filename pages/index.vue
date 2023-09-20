@@ -90,32 +90,34 @@
         class="default-layout-padding flex flex-col items-center justify-start gap-20px"
       >
         <Typo role="h2" class-name="uppercase text-center">
-          Earn up to 456% on your crypto</Typo
+          Earn up to
+          {{
+            farmStatus == "success" ? farmsData?.highestApr.toFixed(0) : "..."
+          }}% on your crypto</Typo
         >
         <Typo role="body" class-name="max-w-420px text-body text-center">
           50% of all fees are shared with liquidity providers. You make money
           while you sleep. It's how we aliens usually do.
         </Typo>
-        <AppButton type="tertiary" small>Start Earning</AppButton>
+        <NuxtLink to="https://app.alienbase.xyz/farms" title="Start Earning">
+          <AppButton type="tertiary" small>Start Earning</AppButton>
+        </NuxtLink>
       </header>
       <div class="w-full max-w-screen relative">
         <div
-          class="farms-scroll-container default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
+          class="farms-scroll-container pt-60px default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
         >
           <FarmCard
             :name="farm.name"
-            :icons="[
-              'https://app.alienbase.xyz/logo.png',
-              'https://app.alienbase.xyz/logo.png',
-            ]"
+            :icons="farm.icons"
             :multipler="farm.multiplier"
             earn="alb"
             :liquidity="Number(farm.liquidity)"
             :rewards="farm.reward"
             :apr="Number(farm.apr)"
             :contract="farm.contract"
-            to="asd"
-            v-for="(farm, i) in farms"
+            :to="farm.link"
+            v-for="(farm, i) in farmsData?.farms"
             :key="i"
           />
         </div>
@@ -136,10 +138,6 @@
         ></div>
         <div
           class="h-full w-200px <md:hidden absolute right-0 top-0 pointer-events-none select-none"
-          :class="{
-            'opacity-0': farmScrollPosition >= 3200,
-            'opacity-100': farmScrollPosition < 3200,
-          }"
           style="
             transition: all 0.3s;
             background: linear-gradient(
@@ -149,6 +147,22 @@
             );
           "
         ></div>
+        <div
+          class="navigator flex flex-row items-center justify-end gap-12px absolute top-0 right-18px"
+        >
+          <div
+            class="prev cursor-pointer rounded-100px w-44px h-44px border-1px border-outline grid place-items-center text-headline hover:(bg-outline)"
+            @click="scrollPrev"
+          >
+            <IcOutlineArrowBackward />
+          </div>
+          <div
+            class="next cursor-pointer rounded-100px w-44px h-44px border-1px border-outline grid place-items-center text-headline hover:(bg-outline)"
+            @click="scrollNext"
+          >
+            <IcOutlineArrowForward />
+          </div>
+        </div>
       </div>
     </section>
     <section
@@ -177,7 +191,9 @@
           Humans are prone to violence. We created a place where you can trade
           memecoins without getting rugged
         </Typo>
-        <AppButton type="secondary" small>Visit Area 51</AppButton>
+        <NuxtLink to="https://area51.alienbase.xyz/" title="Visit Area 51">
+          <AppButton type="secondary" small>Visit Area 51</AppButton>
+        </NuxtLink>
       </header>
     </section>
     <section
@@ -237,8 +253,15 @@
               Area51
             </Typo>
             <div class="flex flex-row items-start justify-start gap-12px">
-              <AppButton small>BUY ALB</AppButton>
-              <AppButton type="secondary" small>STAKE ALB</AppButton>
+              <NuxtLink to="https://app.alienbase.xyz/swap" title="Buy ALB">
+                <AppButton small>BUY ALB</AppButton>
+              </NuxtLink>
+              <NuxtLink
+                to="https://app.alienbase.xyz/liquidity"
+                title="Stake ALB"
+              >
+                <AppButton type="secondary" small>STAKE ALB</AppButton>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -293,8 +316,15 @@
           <div
             class="flex flex-row items-center <md:items-start justify-start gap-12px"
           >
-            <AppButton small>BUY ALB</AppButton>
-            <AppButton type="secondary" small>STAKE ALB</AppButton>
+            <NuxtLink to="https://app.alienbase.xyz/swap" title="Buy ALB">
+              <AppButton small>BUY ALB</AppButton>
+            </NuxtLink>
+            <NuxtLink
+              to="https://app.alienbase.xyz/liquidity"
+              title="Stake ALB"
+            >
+              <AppButton type="secondary" small>STAKE ALB</AppButton>
+            </NuxtLink>
           </div>
         </div>
       </main>
@@ -355,7 +385,11 @@
 </template>
 
 <script lang="ts" setup>
+import IcOutlineArrowForward from "~icons/ic/outline-arrow-forward";
+import IcOutlineArrowBackward from "~icons/ic/outline-arrow-back";
+
 import { AppConfigs } from "@/configs/AppConfig";
+import { TokenIcons } from "@/configs/TokensConfig";
 
 const partners = ref([
   {
@@ -410,6 +444,13 @@ interface ALBFarm {
   reward: null | string;
   liquidity: number;
   apr: string;
+  link: string;
+  icons: string[];
+}
+
+interface FarmsData {
+  highestApr: number;
+  farms: ALBFarm[];
 }
 
 const {
@@ -456,7 +497,7 @@ const {
 );
 
 const {
-  data: farms,
+  data: farmsData,
   status: farmStatus,
   refresh: refreshFarms,
 } = await useAsyncData(
@@ -470,22 +511,39 @@ const {
     ),
   {
     immediate: true,
-    transform: (v: object[]): ALBFarm[] => {
-      return v.map(
+    transform: (v: object[]): FarmsData => {
+      const farms = v.map(
         (el: any): ALBFarm => ({
           pid: el.pid,
           name: el.lpSymbol,
           contract: el.lpAddress,
           multiplier: el.multiplier,
           reward: el.extraTokenSymbol || null,
+          icons: [el.quoteToken.address, el.token.address],
           liquidity: Number(
             (
               Number(el.lpTotalInQuoteToken) * Number(el.quoteTokenPriceBusd)
             ).toFixed(0)
           ),
           apr: el.apr.toFixed(2),
+          link: `https://app.alienbase.xyz/add/${el.quoteToken.address}/${el.token.address}`,
         })
       );
+
+      return {
+        farms: farms.map((f) => {
+          const icon1 = TokenIcons.find((el) => el.includes(f.icons[0]));
+          const icon2 = TokenIcons.find((el) => el.includes(f.icons[1]));
+          return {
+            ...f,
+            icons: [
+              `https://app.alienbase.xyz/images/tokens/${icon1}`,
+              `https://app.alienbase.xyz/images/tokens/${icon2}`,
+            ],
+          };
+        }),
+        highestApr: farms.map((el) => Number(el.apr)).sort((a, b) => b - a)[0],
+      };
     },
   }
 );
@@ -537,6 +595,26 @@ const ALBData = ref<ALBData[][]>([
 
 const farmScrollPosition = ref(0);
 
+const scrollNext = () => {
+  const farmsContainer = document.querySelector(
+    ".farms-scroll-container"
+  ) as HTMLElement;
+  farmsContainer.scrollBy({
+    behavior: "smooth",
+    left: 320,
+  });
+};
+
+const scrollPrev = () => {
+  const farmsContainer = document.querySelector(
+    ".farms-scroll-container"
+  ) as HTMLElement;
+  farmsContainer.scrollBy({
+    behavior: "smooth",
+    left: -320,
+  });
+};
+
 onMounted(() => {
   const farmsContainer = document.querySelector(
     ".farms-scroll-container"
@@ -544,7 +622,7 @@ onMounted(() => {
   farmsContainer.addEventListener("scroll", (e: Event) => {
     const container = e.target as HTMLElement;
     farmScrollPosition.value = container.scrollLeft;
-    console.log(farmScrollPosition.value, container.getBoundingClientRect());
+    /* console.log(farmScrollPosition.value, container.getBoundingClientRect()); */
   });
 });
 </script>
@@ -573,6 +651,12 @@ onMounted(() => {
   @media screen and (min-width: 1408px) {
     background-size: 2504px;
     background-position: center -100%;
+  }
+}
+
+.farms-scroll-container {
+  &::-webkit-scrollbar {
+    @apply hidden;
   }
 }
 </style>
