@@ -3,7 +3,8 @@
     class="cards-trigger grid-container w-full max-w-1000px flex flex-col items-start justify-start gap-20px"
   >
     <GridCard
-      title="Earn on AlienBase"
+      title="Earn"
+      link-title="Earn on AlienBase"
       content="Boost your earnings by becoming a Liquidity Provider. Deposit assets in a pair and enjoy a share of the swap fees."
       to="https://app.alienbase.xyz/"
       class="earn-feature md:(h-420px gap-0px) <md:gap-20px flex flex-col items-center justify-center"
@@ -27,7 +28,8 @@
       class="w-full flex flex-row <md:flex-col items-start justify-between gap-20px"
     >
       <GridCard
-        title="Farm on AlienBase"
+        link-title="Farm on AlienBase"
+        title="Farm"
         content="Dive into our farming program and harvest ALB rewards. By staking your Liquidity Pool Tokens, you not only support the ecosystem but also earn ALB tokens."
         to="https://app.alienbase.xyz/farms"
         class="farm-feature md:h-660px flex flex-col items-center jusitfy-center gap-48px"
@@ -49,7 +51,9 @@
       </GridCard>
       <div class="w-full flex flex-col items-start justify-start gap-20px">
         <GridCard
-          title="Stake on AlienBase"
+          small
+          link-title="Stake on AlienBase"
+          title="Stake"
           content="Unlock the power of staking with ALB. Receive genuine yield in ETH from Area51, our exclusive DEX for the fearless, along with ALB rewards. Plus, enjoy exclusive airdrops from projects making their debut on Area51."
           to="https://app.alienbase.xyz/"
           :padding-bottom="false"
@@ -63,7 +67,9 @@
           <Typo role="h2">STAKE</Typo>
         </GridCard>
         <GridCard
-          title="Dual Farm Rewards on AlienBase"
+          small
+          link-title="Dual Farm Rewards on AlienBase"
+          title="Dual Farm Rewards"
           content="Maximize your gains with our Double Rewards program. When you stake your LP tokens in our farms, you're eligible to earn rewards in multiple tokens, thanks to our collaborations with partner projects."
           to="https://app.alienbase.xyz/"
           :padding-bottom="false"

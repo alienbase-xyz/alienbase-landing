@@ -93,7 +93,7 @@ interface Props {
   icons: string[];
   multipler: string;
   liquidity: number;
-  rewards?: string;
+  rewards?: string | null;
   apr: number;
   contract: string;
   to: string;

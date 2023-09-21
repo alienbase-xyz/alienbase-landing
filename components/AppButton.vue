@@ -16,6 +16,7 @@
 <script lang="ts" setup>
 interface Props {
   small?: boolean;
+  icon?: any;
   disabled?: boolean;
   type?: "primary" | "secondary" | "tertiary";
 }
@@ -52,6 +53,8 @@ button {
     @apply text-background;
 
     &:hover {
+      box-shadow: 0px 2px 0px 0px #f9fbff inset, 0px -2px 0px 0px #b1b3b5 inset,
+        0 5px 30px rgba(255, 255, 255, 0.2);
       background: linear-gradient(180deg, #c9cbcf 0%, #eff1f5 100%);
     }
   }

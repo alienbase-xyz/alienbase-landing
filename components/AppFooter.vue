@@ -8,18 +8,43 @@
       <Typo role="h2" class-name="uppercase text-center"
         >Join our community</Typo
       >
-      <NuxtLink
-        to="https://t.me/alienbaseDEX"
-        title="Telegram Group"
-        target="_blank"
-        class="hover:opacity-60"
-        style="transition: all 0.3s"
-      >
-        <IconsTelegram />
-      </NuxtLink>
+      <div class="flex flex-row items-center justify-center gap-24px">
+        <NuxtLink
+          to="https://t.me/alienbaseDEX"
+          title="Telegram Group"
+          target="_blank"
+          class="hover:opacity-60"
+          style="transition: all 0.3s"
+        >
+          <IconsTelegram />
+        </NuxtLink>
+        <NuxtLink
+          to="https://discord.gg/q9vFy6GwFx"
+          title="Discord"
+          target="_blank"
+          class="hover:opacity-60"
+          style="transition: all 0.3s"
+        >
+          <IconsDiscord />
+        </NuxtLink>
+      </div>
     </div>
     <footer class="w-full flex flex-col items-center justify-start gap-40px">
-      <AppButton>Get Started</AppButton>
+      <NuxtLink
+        class="footer-cta"
+        to="https://app.alienbase.xyz/"
+        title="Get Started"
+      >
+        <IconButton
+          icon-side="right"
+          icon-class="text-headline"
+          :icon="IcOutlineArrowForward"
+        >
+          <Typo role="cta" class-name="text-white whitespace-nowrap">
+            Get Started
+          </Typo>
+        </IconButton>
+      </NuxtLink>
       <div class="w-full flex flex-col items-center justify-start gap-0">
         <div
           class="top px-60px w-full flex flex-col items-center lg:(flex-row items-center justify-between) gap-32px py-20px border-b-1px border-outline"
@@ -91,6 +116,7 @@
 </template>
 
 <script lang="ts" setup>
+import IcOutlineArrowForward from "~icons/ic/outline-arrow-forward";
 import { NavConfigs } from "~/configs/NavConfig";
 
 const links = ref(NavConfigs);

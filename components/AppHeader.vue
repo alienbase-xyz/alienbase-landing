@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="nav-wrapper w-screen fixed top-0 left-0 h-100px"
-    style="z-index: 999"
-  >
+  <div class="nav-wrapper w-screen h-100px">
     <nav
       class="w-full h-full relative flex flex-row items-center justify-between default-layout-padding bg-[##0e1218] bg-opacity-20 backdrop-filter backdrop-blur-4px"
     >
@@ -59,26 +56,32 @@
           </NuxtLink>
         </li>
       </ul>
-      <NuxtLink
-        to="https://app.alienbase.xyz/"
-        title="Trade Now"
-        class="cta-wrapper <lg:hidden"
-      >
-        <AppButton type="tertiary">Trade Now</AppButton>
-      </NuxtLink>
-      <button
-        class="menu-wrapper min-w-44px w-44px h-44px rounded-10px grid place-items-center cursor-pointer lg:hidden"
-        :class="{
-          'border-outline border-1px hover:border-2px': !menu.visible,
-          'border-[#0358D8] border-2px': menu.visible,
-        }"
-        style="transition: all 0.3s"
-        @click="menu.toggle(!menu.visible)"
-      >
-        <IconsMenu v-if="!menu.visible" />
-        <IconsCross v-else />
-      </button>
     </nav>
+  </div>
+
+  <div
+    class="cta-container h-100px grid place-items-center px-18px fixed top-0 right-0"
+    style="z-index: 999"
+  >
+    <button
+      class="menu-wrapper min-w-44px w-44px h-44px rounded-10px grid place-items-center cursor-pointer lg:hidden"
+      :class="{
+        'border-outline border-1px hover:border-2px': !menu.visible,
+        'border-[#0358D8] border-2px': menu.visible,
+      }"
+      style="transition: all 0.3s"
+      @click="menu.toggle(!menu.visible)"
+    >
+      <IconsMenu v-if="!menu.visible" />
+      <IconsCross v-else />
+    </button>
+    <NuxtLink
+      to="https://app.alienbase.xyz/"
+      title="Trade Now"
+      class="cta-wrapper <lg:hidden"
+    >
+      <AppButton type="tertiary">Trade Now</AppButton>
+    </NuxtLink>
   </div>
 </template>
 

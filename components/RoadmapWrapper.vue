@@ -118,6 +118,7 @@
           'h-auto': sections[step].cta,
         }"
         :to="sections[step].cta?.to"
+        target="_blank"
       >
         <button
           class="text-headline text-15px font-medium hover:opacity-60"
@@ -181,7 +182,7 @@ const sections = ref<Section[]>([
       "Area 51 is a unique space for humans to experiment with tokens that carry higher risk than the usual assets listed on Alien Base.",
     cta: {
       name: "Read more",
-      to: "",
+      to: "https://docs.alienbase.xyz/area-51",
     },
   },
   {
@@ -190,7 +191,7 @@ const sections = ref<Section[]>([
       "Perpetuals are the best place to trade long and short with leverage, which we hear is very appreciated by Earth degens.",
     cta: {
       name: "Read more",
-      to: "",
+      to: "https://docs.alienbase.xyz/roadmap",
     },
   },
   {

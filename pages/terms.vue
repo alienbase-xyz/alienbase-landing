@@ -1,6 +1,6 @@
 <template>
   <section
-    class="mx-auto max-w-800px defauly-layout-padding w-full flex flex-col items-start justify-start pt-150px pb-180px"
+    class="mx-auto max-w-800px default-layout-padding w-full flex flex-col items-start justify-start pt-150px pb-180px"
   >
     <header class="flex flex-col items-start justify-start gap-0">
       <h1 class="text-3xl">Terms of Service</h1>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="home-wrapper w-full pt-200px flex flex-col items-center justify-start gap-100px"
+    class="home-wrapper w-full pt-100px flex flex-col items-center justify-start gap-100px"
   >
     <div class="hero w-full flex flex-col items-center justify-start gap-120px">
       <section
@@ -38,9 +38,14 @@
           <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px border-[#EEF0F4] <lg:(border-b-1px) border-opacity-10"
           >
-            <Typo role="h2" gradient>$18.59M</Typo>
+            <Typo role="h2" gradient>{{
+              tvlStatus == "success" && tvl
+                ? `$${(tvl / 1_000_000).toFixed(2)}M`
+                : "..."
+            }}</Typo>
             <Typo role="body" class-name="text-body">
-              Total Liquidity <span class="text-green">+31.74%</span>
+              Total Value Locked (TVL)
+              <!-- <span class="text-green">+31.74%</span> -->
             </Typo>
           </div>
           <div
@@ -49,7 +54,7 @@
             <Typo role="h2" gradient
               >${{
                 albMarketStatus == "success"
-                  ? albMarket?.volume / 1_000
+                  ? (albMarket?.volume / 1_000).toFixed(2)
                   : "..."
               }}K</Typo
             >
@@ -114,7 +119,7 @@
             earn="alb"
             :liquidity="Number(farm.liquidity)"
             :rewards="farm.reward"
-            :apr="Number(farm.apr)"
+            :apr="farm.apr"
             :contract="farm.contract"
             :to="farm.link"
             v-for="(farm, i) in farmsData?.farms"
@@ -185,14 +190,18 @@
           class="text-18px text-headline font-bold max-w-350px md:max-w-500px uppercase leading-[120%]"
           stlye="letter-spacing: -3px;"
         >
-          The safe place for earthlings to trade memecoins
+          The safe(r) place for earthlings to trade memecoins
         </h2>
         <Typo role="body" class-name="max-w-400px text-body">
           Humans are prone to violence. We created a place where you can trade
-          memecoins without getting rugged
+          microcap tokens without getting rugged
         </Typo>
         <NuxtLink to="https://area51.alienbase.xyz/" title="Visit Area 51">
-          <AppButton type="secondary" small>Visit Area 51</AppButton>
+          <IconButton :icon="IconsArea51Text" type="secondary" small>
+            <Typo role="cta" class-name="text-dark whitespace-nowrap">
+              Visit Area 51
+            </Typo>
+          </IconButton>
         </NuxtLink>
       </header>
     </section>
@@ -249,9 +258,21 @@
             class="flex flex-col items-start justify-start gap-14px <lg:hidden"
           >
             <Typo role="body" class-name="text-body max-w-350px">
-              You can stake ALB with X APR and receive exclusive airdrops from
-              Area51
+              You can stake ALB with
+              {{
+                farmStatus == "success"
+                  ? farmsData?.highestApr?.toFixed(0)
+                  : "..."
+              }}% APR and receive exclusive airdrops from Area51
             </Typo>
+            <NuxtLink
+              to="https://docs.alienbase.xyz/alb-token"
+              title="ALB Tokenomics"
+              class="text-headline font-medium mb-4px text-18px flex flex-row items-center justify-start gap-8px hover:(opacity-60 underline)"
+              style="transition: all 0.3s"
+            >
+              ALB Tokenomics <IconsExternalLink class="w-24px h-24px" />
+            </NuxtLink>
             <div class="flex flex-row items-start justify-start gap-12px">
               <NuxtLink to="https://app.alienbase.xyz/swap" title="Buy ALB">
                 <AppButton small>BUY ALB</AppButton>
@@ -310,9 +331,21 @@
           class="flex flex-col items-center <md:items-start justify-start gap-14px mt-24px lg:hidden"
         >
           <Typo role="body" class-name="text-body">
-            You can stake ALB with X APR and receive exclusive airdrops from
-            Area51
+            You can stake ALB with
+            {{
+              farmStatus == "success"
+                ? farmsData?.highestApr?.toFixed(0)
+                : "..."
+            }}% APR and receive exclusive airdrops from Area51
           </Typo>
+          <NuxtLink
+            to="https://docs.alienbase.xyz/alb-token"
+            title="ALB Tokenomics"
+            class="text-headline font-medium mb-4px text-18px flex flex-row items-center justify-start gap-8px hover:(opacity-60 underline)"
+            style="transition: all 0.3s"
+          >
+            ALB Tokenomics <IconsExternalLink class="w-24px h-24px" />
+          </NuxtLink>
           <div
             class="flex flex-row items-center <md:items-start justify-start gap-12px"
           >
@@ -345,7 +378,7 @@
           class="w-600px h-600px rounded-600px bg-body bg-opacity-10 filter blur-200px absolute <md:hidden"
           style="z-index: -1"
         ></div>
-        <TokenomicsWrapper />
+        <RoadmapWrapper />
       </div>
     </section>
     <section
@@ -385,6 +418,8 @@
 </template>
 
 <script lang="ts" setup>
+import IconsArea51Text from "@/components/Icons/Area51Text.vue";
+
 import IcOutlineArrowForward from "~icons/ic/outline-arrow-forward";
 import IcOutlineArrowBackward from "~icons/ic/outline-arrow-back";
 
@@ -399,6 +434,10 @@ const partners = ref([
   {
     name: "Axelar",
     img: "/svg/partners/axelar.svg",
+  },
+  {
+    name: "KyberSwap",
+    img: "/svg/partners/kyberswap.svg",
   },
   {
     name: "Overnight",
@@ -443,7 +482,7 @@ interface ALBFarm {
   multiplier: string;
   reward: null | string;
   liquidity: number;
-  apr: string;
+  apr: number;
   link: string;
   icons: string[];
 }
@@ -483,6 +522,7 @@ const {
       `https://sxxtwqn1v0.execute-api.eu-central-1.amazonaws.com/prod/supply`,
       {
         mode: "no-cors",
+        retry: 3,
       }
     ),
   {
@@ -497,15 +537,34 @@ const {
 );
 
 const {
+  data: tvl,
+  status: tvlStatus,
+  refresh: refreshTvl,
+} = await useAsyncData(
+  "alb-tvl",
+  (ctx) =>
+    $fetch("https://api.llama.fi/tvl/alien-base", {
+      retry: 3,
+    }),
+  {
+    immediate: true,
+    transform: (v: number): number => {
+      return v;
+    },
+  }
+);
+
+const {
   data: farmsData,
   status: farmStatus,
   refresh: refreshFarms,
 } = await useAsyncData(
   "alb-farms",
-  () =>
+  (ctx) =>
     $fetch(
       "https://4nsrsfaan2.execute-api.eu-central-1.amazonaws.com/prod/farms",
       {
+        retry: 3,
         mode: "no-cors",
       }
     ),
@@ -525,7 +584,7 @@ const {
               Number(el.lpTotalInQuoteToken) * Number(el.quoteTokenPriceBusd)
             ).toFixed(0)
           ),
-          apr: el.apr.toFixed(2),
+          apr: +el.apr.toFixed(0),
           link: `https://app.alienbase.xyz/add/${el.quoteToken.address}/${el.token.address}`,
         })
       );
@@ -593,6 +652,18 @@ const ALBData = ref<ALBData[][]>([
   ],
 ]);
 
+const route = useRoute();
+
+watch(
+  () => route.name,
+  () => {
+    refreshAlbMarket();
+    refreshAlbSupply();
+    refreshFarms();
+    refreshTvl();
+  }
+);
+
 const farmScrollPosition = ref(0);
 
 const scrollNext = () => {
@@ -628,7 +699,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.home-wrapper {
+/* .home-wrapper {
   background-image: url(/img/hero-illustration.png);
   background-repeat: no-repeat;
   background-size: 954px;
@@ -652,7 +723,7 @@ onMounted(() => {
     background-size: 2504px;
     background-position: center -100%;
   }
-}
+} */
 
 .farms-scroll-container {
   &::-webkit-scrollbar {

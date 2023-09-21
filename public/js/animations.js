@@ -1,6 +1,13 @@
 window.addEventListener("DOMContentLoaded", () => {
   gsap.registerPlugin(ScrollTrigger);
 
+  gsap.from(".hero-illustration", {
+    opacity: 0,
+    stagger: 0.5,
+    delay: 1,
+    duration: 0.5,
+  });
+
   gsap.from("h1", {
     y: 30,
     opacity: 0,
@@ -44,11 +51,6 @@ window.addEventListener("DOMContentLoaded", () => {
     opacity: 0,
     duration: 0.6,
     delay: 1.4,
-  });
-
-  gsap.from(".nav-wrapper", {
-    y: "-100%",
-    duration: 1,
   });
 
   gsap.to(".area-51-tokens", {
@@ -156,4 +158,41 @@ window.addEventListener("DOMContentLoaded", () => {
       /* markers: true, */
     },
   });
+
+  gsap.from(".footer-cta", {
+    y: -30,
+    opacity: 0,
+    duration: 1,
+    delay: 0.2,
+    stagger: 0.5,
+    scrollTrigger: {
+      trigger: "footer",
+      start: "top+=100px bottom",
+      end: "top-=100px 70%",
+      scrub: 1,
+      /* markers: true, */
+    },
+  });
+
+  gsap.from(".footer-illustration", {
+    opacity: 0,
+    duration: 1,
+    delay: 0.2,
+    stagger: 0.5,
+    scrollTrigger: {
+      trigger: "footer",
+      start: "top+=100px bottom",
+      end: "top-=100px 70%",
+      scrub: 1,
+      /* markers: true, */
+    },
+  });
+});
+
+window.addEventListener("resize", () => {
+  ScrollTrigger.refresh();
+});
+
+window.addEventListener("scroll", () => {
+  ScrollTrigger.refresh();
 });
