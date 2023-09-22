@@ -49,22 +49,29 @@
             </Typo>
           </div>
           <div
+            class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px <md:border-b-1px border-[#EEF0F4] border-opacity-10"
+          >
+            <Typo role="h2" gradient>{{
+              btcStatus == "success" && dexStatus == "success"
+                ? `$${(
+                    ((btcPrice ?? 0) * dexData?.tradeVolume24H) /
+                    1000
+                  ).toFixed(2)}K`
+                : "..."
+            }}</Typo>
+            <Typo role="body" class-name="text-body">24H Volume</Typo>
+          </div>
+          <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px border-[#EEF0F4] <lg:(border-b-1px) border-opacity-10"
           >
-            <Typo role="h2" gradient
-              >${{
+            <Typo role="h2" gradient>
+              ${{
                 albMarketStatus == "success"
                   ? (albMarket?.volume / 1_000).toFixed(2)
                   : "..."
-              }}K</Typo
-            >
+              }}K
+            </Typo>
             <Typo role="body" class-name="text-body">Total Volume</Typo>
-          </div>
-          <div
-            class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px <md:border-b-1px border-[#EEF0F4] border-opacity-10"
-          >
-            <Typo role="h2" gradient>$25.436M</Typo>
-            <Typo role="body" class-name="text-body">24H Transactions</Typo>
           </div>
           <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px"
@@ -394,7 +401,7 @@
         </p>
       </header>
       <ul
-        class="partners flex flex-row items-center justify-center gap-60px <lg:flex-col"
+        class="partners flex flex-row flex-wrap items-center justify-center gap-60px <lg:flex-col max-w-1000px"
       >
         <li
           class="partner max-h-45px"
@@ -436,16 +443,24 @@ const partners = ref([
     img: "/svg/partners/axelar.svg",
   },
   {
-    name: "KyberSwap",
-    img: "/svg/partners/kyberswap.svg",
-  },
-  {
     name: "Overnight",
     img: "/svg/partners/overnight.svg",
   },
   {
     name: "Wormhole",
     img: "/svg/partners/wormhole.svg",
+  },
+  {
+    name: "KyberSwap",
+    img: "/svg/partners/kyberswap.svg",
+  },
+  {
+    name: "BitGet",
+    img: "/svg/partners/bitget.svg",
+  },
+  {
+    name: "OpenOcean",
+    img: "/svg/partners/openocean.svg",
   },
 ]);
 
@@ -493,12 +508,44 @@ interface FarmsData {
 }
 
 const {
+  data: btcPrice,
+  status: btcStatus,
+  refresh: refreshBtc,
+} = await useAsyncData(
+  "btc-price",
+  (_) => $fetch("https://api.coingecko.com/api/v3/coins/bitcoin"),
+  {
+    immediate: true,
+    transform: (v: any): number => {
+      return v.market_data.current_price.usd;
+    },
+  }
+);
+
+const {
+  data: dexData,
+  status: dexStatus,
+  refresh: refreshDex,
+} = await useAsyncData(
+  "dex-data",
+  (_) => $fetch("https://api.coingecko.com/api/v3/exchanges/alien-base"),
+  {
+    immediate: true,
+    transform: (v: any) => {
+      return {
+        tradeVolume24H: v.trade_volume_24h_btc,
+      };
+    },
+  }
+);
+
+const {
   data: albMarket,
   status: albMarketStatus,
   refresh: refreshAlbMarket,
 } = await useAsyncData(
   "alb-market",
-  () => $fetch("https://api.coingecko.com/api/v3/coins/alienbase"),
+  (_) => $fetch("https://api.coingecko.com/api/v3/coins/alienbase"),
   {
     immediate: true,
     transform: (v: any) => {
@@ -517,12 +564,15 @@ const {
   refresh: refreshAlbSupply,
 } = await useAsyncData(
   "alb-supply",
-  () =>
+  (_) =>
     $fetch(
       `https://sxxtwqn1v0.execute-api.eu-central-1.amazonaws.com/prod/supply`,
       {
         mode: "no-cors",
         retry: 3,
+        onRequestError: (e) => {
+          console.log(e);
+        },
       }
     ),
   {
@@ -542,9 +592,12 @@ const {
   refresh: refreshTvl,
 } = await useAsyncData(
   "alb-tvl",
-  (ctx) =>
+  (_) =>
     $fetch("https://api.llama.fi/tvl/alien-base", {
       retry: 3,
+      onRequestError: (e) => {
+        console.log(e);
+      },
     }),
   {
     immediate: true,
@@ -554,18 +607,24 @@ const {
   }
 );
 
+const getImageUrlFromToken = (addr: string) =>
+  computed(() => `/tokens/${addr}.png`).value;
+
 const {
   data: farmsData,
   status: farmStatus,
   refresh: refreshFarms,
 } = await useAsyncData(
   "alb-farms",
-  (ctx) =>
+  (_) =>
     $fetch(
       "https://4nsrsfaan2.execute-api.eu-central-1.amazonaws.com/prod/farms",
       {
         retry: 3,
         mode: "no-cors",
+        onRequestError: (e) => {
+          console.log(e);
+        },
       }
     ),
   {
@@ -591,13 +650,11 @@ const {
 
       return {
         farms: farms.map((f) => {
-          const icon1 = TokenIcons.find((el) => el.includes(f.icons[0]));
-          const icon2 = TokenIcons.find((el) => el.includes(f.icons[1]));
           return {
             ...f,
             icons: [
-              `https://app.alienbase.xyz/images/tokens/${icon1}`,
-              `https://app.alienbase.xyz/images/tokens/${icon2}`,
+              getImageUrlFromToken(f.icons[1]),
+              getImageUrlFromToken(f.icons[0]),
             ],
           };
         }),
