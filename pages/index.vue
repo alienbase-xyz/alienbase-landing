@@ -205,7 +205,7 @@
         </h2>
         <Typo role="body" class-name="max-w-400px text-body">
           Humans are prone to violence. We created a place where you can trade
-          concept coins without getting rugged.
+          microcap tokens without getting rugged.
         </Typo>
         <NuxtLink to="https://area51.alienbase.xyz/" title="Visit Area 51">
           <IconButton :icon="IconsArea51Text" type="secondary" small>
