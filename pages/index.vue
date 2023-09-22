@@ -681,7 +681,7 @@ const {
   }
 );
 
-const ALBData = ref<ALBData[][]>([
+const ALBData = computed(() => [
   [
     {
       name: "Price",
