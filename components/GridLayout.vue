@@ -10,7 +10,7 @@
       class="earn-feature md:(h-420px gap-0px) <md:gap-20px flex flex-col items-center justify-center"
     >
       <AppImg
-        src="/img/earn.png"
+        src="/webp/earn.webp"
         alt="Earn ALB Token on AlienBase"
         class-name="w-full"
       />
@@ -35,7 +35,7 @@
         class="farm-feature md:h-660px flex flex-col items-center jusitfy-center gap-48px"
       >
         <AppImg
-          src="/img/farm.png"
+          src="/webp/farm.webp"
           alt="Farm ALB Token on AlienBase"
           class-name="w-full"
         />
@@ -60,7 +60,7 @@
           class="stake-feature md:h-320px flex flex-col items-start justify-center gap-48px"
         >
           <AppImg
-            src="/img/stake.png"
+            src="/webp/stake.webp"
             alt="Stake ALB Token on AlienBase"
             class-name="w-full"
           />
@@ -76,7 +76,7 @@
           class="dual-rewards-feature md:h-320px flex flex-col items-start justify-between gap-48px"
         >
           <AppImg
-            src="/img/rewards.png"
+            src="/webp/rewards.webp"
             alt="Get Dual-Farm Rewards on AlienBase"
             class-name="w-full"
           />

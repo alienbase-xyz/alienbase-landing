@@ -168,7 +168,7 @@ window.addEventListener("DOMContentLoaded", () => {
     scrollTrigger: {
       trigger: "footer",
       start: "top+=100px bottom",
-      end: "top-=100px 70%",
+      end: "top-=150px 60%",
       scrub: 1,
       /* markers: true, */
     },
@@ -182,9 +182,9 @@ window.addEventListener("DOMContentLoaded", () => {
     scrollTrigger: {
       trigger: "footer",
       start: "top+=100px bottom",
-      end: "top-=100px 70%",
+      end: "top-=150px 60%",
       scrub: 1,
-      /* markers: true, */
+      markers: true,
     },
   });
 });

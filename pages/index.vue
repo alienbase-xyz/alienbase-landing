@@ -49,6 +49,18 @@
             </Typo>
           </div>
           <div
+            class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px border-[#EEF0F4] <lg:(border-b-1px) border-opacity-10"
+          >
+            <Typo role="h2" gradient>
+              ${{
+                albMarketStatus == "success"
+                  ? (albMarket?.cap / 1_000).toFixed(3)
+                  : "..."
+              }}K
+            </Typo>
+            <Typo role="body" class-name="text-body">Market Cap.</Typo>
+          </div>
+          <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px <md:border-b-1px border-[#EEF0F4] border-opacity-10"
           >
             <Typo role="h2" gradient>{{
@@ -62,23 +74,11 @@
             <Typo role="body" class-name="text-body">24H Volume</Typo>
           </div>
           <div
-            class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px border-[#EEF0F4] <lg:(border-b-1px) border-opacity-10"
-          >
-            <Typo role="h2" gradient>
-              ${{
-                albMarketStatus == "success"
-                  ? (albMarket?.volume / 1_000).toFixed(2)
-                  : "..."
-              }}K
-            </Typo>
-            <Typo role="body" class-name="text-body">Total Volume</Typo>
-          </div>
-          <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px"
           >
             <Typo role="h2" gradient>{{
               albLiqStatus == "success"
-                ? `$${((albLiquidity ?? 0) / 10_00).toFixed(2)}K`
+                ? `$${((albLiquidity ?? 0) / 1000).toFixed(2)}K`
                 : "..."
             }}</Typo>
             <Typo role="body" class-name="text-body">Liquidity</Typo>
@@ -573,7 +573,7 @@ const {
   {
     immediate: true,
     transform: (v: any): number => {
-      return v.pairs[0].liquidity.usd;
+      return v.pairs[0].liquidity.usd + v.pairs[1].liquidity.usd;
     },
   }
 );
@@ -778,6 +778,10 @@ onMounted(() => {
     farmScrollPosition.value = container.scrollLeft;
     /* console.log(farmScrollPosition.value, container.getBoundingClientRect()); */
   });
+
+  if (farmsData.value?.highestApr == 0) {
+    refreshData();
+  }
 });
 
 watch(
