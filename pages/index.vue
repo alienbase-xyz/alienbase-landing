@@ -76,8 +76,12 @@
           <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px"
           >
-            <Typo role="h2" gradient>1.354</Typo>
-            <Typo role="body" class-name="text-body">ALB holders</Typo>
+            <Typo role="h2" gradient>{{
+              albLiqStatus == "success"
+                ? `$${((albLiquidity ?? 0) / 10_00).toFixed(2)}K`
+                : "..."
+            }}</Typo>
+            <Typo role="body" class-name="text-body">Liquidity</Typo>
           </div>
         </div>
       </section>
@@ -559,6 +563,23 @@ const {
 );
 
 const {
+  data: albLiquidity,
+  status: albLiqStatus,
+  refresh: refreshAlbLiq,
+} = await useAsyncData(
+  (_) =>
+    $fetch(
+      "https://api.dexscreener.com/latest/dex/tokens/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4"
+    ),
+  {
+    immediate: true,
+    transform: (v: any): number => {
+      return v.pairs[0].liquidity.usd;
+    },
+  }
+);
+
+const {
   data: albSupply,
   status: albSupplyStatus,
   refresh: refreshAlbSupply,
@@ -711,13 +732,19 @@ const ALBData = ref<ALBData[][]>([
 
 const route = useRoute();
 
+const refreshData = () => {
+  refreshAlbLiq();
+  refreshAlbMarket();
+  refreshAlbSupply();
+  refreshBtc();
+  refreshDex();
+  refreshTvl();
+};
+
 watch(
   () => route.name,
   () => {
-    refreshAlbMarket();
-    refreshAlbSupply();
-    refreshFarms();
-    refreshTvl();
+    refreshData();
   }
 );
 
@@ -753,6 +780,15 @@ onMounted(() => {
     /* console.log(farmScrollPosition.value, container.getBoundingClientRect()); */
   });
 });
+
+watch(
+  () => farmsData.value?.highestApr,
+  (v) => {
+    if (v == 0 || typeof v !== "number") {
+      refreshData();
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
