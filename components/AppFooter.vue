@@ -55,7 +55,7 @@
             to="/"
             title="AlienBase"
           >
-            <IconsAlienBase class="h-30px w-30px" />
+            <IconsAlienBaseWhite class="h-30px w-30px" />
             <p
               class="uppercase text-headline whitespace-nowrap text-18px font-bold"
               style="font-family: 'Syncopate', sans-serif"
