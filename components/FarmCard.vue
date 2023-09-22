@@ -100,6 +100,10 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+onMounted(() => {
+  /* console.log(props.apr); */
+});
 </script>
 
 <style lang="scss" scoped></style>

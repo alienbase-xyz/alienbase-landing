@@ -54,13 +54,19 @@ onMounted(() => {
   card.addEventListener("touchstart", (e) => {
     tapped.value = !tapped.value;
   });
+  card.addEventListener("mouseenter", (e) => {
+    tapped.value = true;
+  });
+  card.addEventListener("mouseleave", (e) => {
+    tapped.value = false;
+  });
 });
 </script>
 
 <style lang="scss" scoped>
 .card {
   border: 1px solid #101722;
-  @apply relative w-full bg-[#060D19] rounded-30px overflow-clip cursor-pointer;
+  @apply relative w-full bg-[#060D19] rounded-30px overflow-clip;
 
   .hover-content {
     clip-path: circle(0px at 95.8% 90%);
@@ -89,7 +95,7 @@ onMounted(() => {
   }
 
   @media screen and (min-width: 764px) {
-    &:hover {
+    .tap {
       .hover-content {
         clip-path: circle(1100px at 95.8% 90%);
       }

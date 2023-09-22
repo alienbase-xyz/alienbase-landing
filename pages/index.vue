@@ -652,7 +652,7 @@ const {
     ),
   {
     immediate: true,
-    transform: (v: object[]): FarmsData => {
+    transform: (v: object[]): void | FarmsData => {
       const farms = v.map(
         (el: any): ALBFarm => ({
           pid: el.pid,
@@ -670,6 +670,13 @@ const {
           link: `https://app.alienbase.xyz/add/${el.quoteToken.address}/${el.token.address}`,
         })
       );
+      const highestApr = farms
+        .map((el) => Number(el.apr))
+        .sort((a, b) => b - a)[0];
+      if (highestApr == 0) {
+        refreshFarms({ dedupe: true });
+        return;
+      }
 
       return {
         farms: farms.map((f) => {
@@ -681,7 +688,7 @@ const {
             ],
           };
         }),
-        highestApr: farms.map((el) => Number(el.apr)).sort((a, b) => b - a)[0],
+        highestApr,
       };
     },
   }
