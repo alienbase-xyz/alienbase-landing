@@ -435,7 +435,6 @@ import IcOutlineArrowForward from "~icons/ic/outline-arrow-forward";
 import IcOutlineArrowBackward from "~icons/ic/outline-arrow-back";
 
 import { AppConfigs } from "@/configs/AppConfig";
-import { TokenIcons } from "@/configs/TokensConfig";
 
 const partners = ref([
   {
