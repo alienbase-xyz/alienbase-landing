@@ -48,7 +48,9 @@ const props = withDefaults(defineProps<Props>(), {
 const tapped = ref(false);
 
 onMounted(() => {
-  const card = document.querySelector(`.card#${id.value}`) as HTMLElement;
+  const card = document.querySelector(
+    `.card#${id.value} button`
+  ) as HTMLElement;
   card.addEventListener("touchstart", (e) => {
     tapped.value = !tapped.value;
   });
