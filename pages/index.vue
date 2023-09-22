@@ -593,7 +593,7 @@ const {
       }
     ),
   {
-    immediate: false,
+    immediate: true,
     transform: (v: any) => {
       return {
         total: v.totalSupply,
@@ -730,8 +730,8 @@ const route = useRoute();
 
 const refreshData = () => {
   refreshAlbLiq();
-  refreshAlbMarket();
   refreshAlbSupply();
+  refreshAlbMarket();
   refreshBtc();
   refreshDex();
   refreshTvl();
