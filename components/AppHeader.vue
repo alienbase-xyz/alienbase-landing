@@ -11,7 +11,7 @@
           to="/"
         >
           <div class="icon-container w-24px h-24px">
-            <IconsAlienBase />
+            <IconsAlienBaseWhite />
           </div>
           <p
             class="font-bold text-12px uppercase text-headline whitespace-nowrap"
