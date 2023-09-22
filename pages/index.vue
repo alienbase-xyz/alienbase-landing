@@ -51,18 +51,6 @@
           <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px border-[#EEF0F4] <lg:(border-b-1px) border-opacity-10"
           >
-            <Typo role="h2" gradient>
-              ${{
-                albMarketStatus == "success"
-                  ? (albMarket?.cap / 1_000).toFixed(3)
-                  : "..."
-              }}K
-            </Typo>
-            <Typo role="body" class-name="text-body">Market Cap.</Typo>
-          </div>
-          <div
-            class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px <md:border-b-1px border-[#EEF0F4] border-opacity-10"
-          >
             <Typo role="h2" gradient>{{
               btcStatus == "success" && dexStatus == "success"
                 ? `$${(
@@ -72,6 +60,18 @@
                 : "..."
             }}</Typo>
             <Typo role="body" class-name="text-body">24H Volume</Typo>
+          </div>
+          <div
+            class="w-full flex flex-col items-center justify-center gap-8px py-20px md:border-r-1px <md:border-b-1px border-[#EEF0F4] border-opacity-10"
+          >
+            <Typo role="h2" gradient>
+              ${{
+                albMarketStatus == "success"
+                  ? (albMarket?.cap / 1_000).toFixed(3)
+                  : "..."
+              }}K
+            </Typo>
+            <Typo role="body" class-name="text-body">Market Cap.</Typo>
           </div>
           <div
             class="w-full flex flex-col items-center justify-center gap-8px py-20px"
@@ -288,10 +288,7 @@
               <NuxtLink to="https://app.alienbase.xyz/swap" title="Buy ALB">
                 <AppButton small>BUY ALB</AppButton>
               </NuxtLink>
-              <NuxtLink
-                to="https://app.alienbase.xyz/liquidity"
-                title="Stake ALB"
-              >
+              <NuxtLink to="https://app.alienbase.xyz/farms" title="Stake ALB">
                 <AppButton type="secondary" small>STAKE ALB</AppButton>
               </NuxtLink>
             </div>
@@ -518,7 +515,7 @@ const {
   "btc-price",
   (_) => $fetch("https://api.coingecko.com/api/v3/coins/bitcoin"),
   {
-    immediate: true,
+    immediate: false,
     transform: (v: any): number => {
       return v.market_data.current_price.usd;
     },
@@ -533,7 +530,7 @@ const {
   "dex-data",
   (_) => $fetch("https://api.coingecko.com/api/v3/exchanges/alien-base"),
   {
-    immediate: true,
+    immediate: false,
     transform: (v: any) => {
       return {
         tradeVolume24H: v.trade_volume_24h_btc,
@@ -550,7 +547,7 @@ const {
   "alb-market",
   (_) => $fetch("https://api.coingecko.com/api/v3/coins/alienbase"),
   {
-    immediate: true,
+    immediate: false,
     transform: (v: any) => {
       return {
         price: v.market_data.current_price.usd.toFixed(5),
@@ -571,7 +568,7 @@ const {
       "https://api.dexscreener.com/latest/dex/tokens/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4"
     ),
   {
-    immediate: true,
+    immediate: false,
     transform: (v: any): number => {
       return v.pairs[0].liquidity.usd + v.pairs[1].liquidity.usd;
     },
@@ -596,7 +593,7 @@ const {
       }
     ),
   {
-    immediate: true,
+    immediate: false,
     transform: (v: any) => {
       return {
         total: v.totalSupply,
@@ -620,7 +617,7 @@ const {
       },
     }),
   {
-    immediate: true,
+    immediate: false,
     transform: (v: number): number => {
       return v;
     },
@@ -770,6 +767,7 @@ const scrollPrev = () => {
 };
 
 onMounted(() => {
+  refreshData();
   const farmsContainer = document.querySelector(
     ".farms-scroll-container"
   ) as HTMLElement;
