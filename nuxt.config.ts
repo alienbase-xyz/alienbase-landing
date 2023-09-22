@@ -32,17 +32,10 @@ export default defineNuxtConfig({
           src: "https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js",
         },
         {
-          src: "https://unpkg.com/split-type",
-        },
-        {
           src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js",
         },
         {
           src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/ScrollTrigger.min.js",
-        },
-        {
-          src: "/js/animations.js",
-          tagPosition: "bodyClose",
         },
         {
           src: "/js/lenis.js",

@@ -468,6 +468,12 @@ useHead({
   htmlAttrs: {
     lang: "en",
   },
+  script: [
+    {
+      src: "/js/animations.js",
+      tagPosition: "bodyClose",
+    },
+  ],
 });
 
 useSeoMeta({
