@@ -184,7 +184,7 @@ window.addEventListener("DOMContentLoaded", () => {
       start: "top+=100px bottom",
       end: "top-=150px 60%",
       scrub: 1,
-      markers: true,
+      /* markers: true, */
     },
   });
 });
