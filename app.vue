@@ -2,6 +2,22 @@
   <NuxtLayout />
 </template>
 
+<script lang="ts" setup>
+useHead({
+  script: [
+    {
+      innerHTML: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag("js", new Date());
+
+gtag("config", "G-4MYKV1JWT8");
+`,
+    },
+  ],
+});
+</script>
+
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500&display=swap");

@@ -28,6 +28,7 @@ export default defineNuxtConfig({
         },
       ],
       script: [
+        { src: "https://www.googletagmanager.com/gtag/js?id=G-4MYKV1JWT8", async: true, },
         {
           src: "https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js",
         },

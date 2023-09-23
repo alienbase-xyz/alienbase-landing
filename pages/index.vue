@@ -227,7 +227,7 @@
       class="w-full min-h-700px flex flex-col items-center justify-end relative mt-50px lg:mt-140px"
     >
       <div
-        class="image-container w-1920px absolute transform <lg:hidden grid place-items-center"
+        class="image-container w-1920px absolute transform grid place-items-center <lg:(translate-y-[-30%] scale-80) <md:(scale-65 translate-y-[-25%])"
         style="z-index: -1"
       >
         <div class="relative w-full max-w-1920px h-1067px">
@@ -260,7 +260,7 @@
             <AppImg
               src="/img/meet-alb-mobile.png"
               alt="Meet ALB Token on AlienBase"
-              class-name="alb-token"
+              class-name="alb-token opacity-0"
             />
           </div>
           <header
