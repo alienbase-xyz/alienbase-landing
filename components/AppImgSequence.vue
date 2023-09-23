@@ -17,6 +17,7 @@ let context: CanvasRenderingContext2D;
 interface Props {
   id: string;
   class?: string | object;
+  loop?: boolean;
   sequence: string;
   width: number;
   height: number;
@@ -34,13 +35,23 @@ const currentFrame = (index: number) =>
 const images: HTMLImageElement[] = [];
 const seq = {
   frame: 0,
+  backwards: false,
 };
 
 const canvas = ref<HTMLCanvasElement>();
 
+let interval: NodeJS.Timeout;
+
 const render = () => {
-  if (seq.frame < frameCount) seq.frame += 1;
-  else if (seq.frame == frameCount) seq.frame = 0;
+  if (seq.frame < frameCount && !seq.backwards) {
+    seq.frame += 1;
+  } else if (seq.frame > 0 && seq.backwards) {
+    seq.frame -= 1;
+  } else if (seq.frame == frameCount && !seq.backwards) {
+    setTimeout(() => (seq.backwards = true), 500);
+  } else if (seq.frame == 0 && seq.backwards) {
+    setTimeout(() => (seq.backwards = false), 500);
+  }
   context.clearRect(0, 0, props.width, props.height);
   context.drawImage(images[seq.frame], 0, 0);
 };
@@ -60,18 +71,13 @@ onMounted(() => {
 
   gsapContext = gsap.context((self) => {
     gsap.to(seq, {
-      frame: frameCount - 1,
+      frame: () => (seq.backwards ? 0 : frameCount),
       snap: "frame",
       ease: "none",
-      delay: 0.2,
-      scrollTrigger: {
-        trigger: `canvas#${props.id}`,
-        start: "top 80%",
-        end: "center top",
-        scrub: 0.2,
-        /*  markers: true, */
+      duration: 2,
+      onStart: () => {
+        interval = setInterval(render, 15);
       },
-      onUpdate: render,
     });
   }, scope.value);
 
@@ -79,6 +85,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  clearInterval(interval);
   gsapContext.revert();
 });
 </script>
