@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@iconify/json": "^2.2.115",
+    "gsap": "^3.12.2",
     "unplugin-icons": "^0.17.0"
   }
 }

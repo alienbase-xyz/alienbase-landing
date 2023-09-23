@@ -184,8 +184,15 @@
     <section
       class="area-51-trigger w-full default-layout-padding flex flex-col items-center justify-start gap-42px"
     >
-      <div class="img-container area-51-tokens">
-        <AppImg src="/img/meet-a51.png" alt="Meet Area51" />
+      <div class="img-container">
+        <AppImgSequence
+          sequence="meme"
+          id="meme-sequence"
+          class="max-w-[424px] <lg:max-w-300px"
+          :width="620"
+          :height="634"
+        />
+        <!-- <AppImg src="/img/meet-a51.png" alt="Meet Area51" /> -->
       </div>
       <header
         class="w-full flex flex-col md:items-center justify-start gap-20px md:text-center"
@@ -201,11 +208,11 @@
           class="text-18px text-headline font-bold max-w-350px md:max-w-500px uppercase leading-[120%]"
           stlye="letter-spacing: -3px;"
         >
-          The safe(r) place for earthlings to trade microcap tokens
+          The safe(r) place for earthlings to trade memecoins
         </h2>
         <Typo role="body" class-name="max-w-400px text-body">
           Humans are prone to violence. We created a place where you can trade
-          microcap tokens without getting rugged.
+          microcap tokens without getting rugged
         </Typo>
         <NuxtLink to="https://area51.alienbase.xyz/" title="Visit Area 51">
           <IconButton :icon="IconsArea51Text" type="secondary" small>
@@ -217,23 +224,30 @@
       </header>
     </section>
     <section
-      class="w-full min-h-700px flex flex-col items-center justify-end relative mt-50px"
+      class="w-full min-h-700px flex flex-col items-center justify-end relative mt-50px lg:mt-140px"
     >
       <div
         class="image-container w-1920px absolute transform <lg:hidden grid place-items-center"
         style="z-index: -1"
       >
         <div class="relative w-full max-w-1920px h-1067px">
-          <AppImg
+          <!-- <AppImg
             src="/img/meet-alb-details.png"
             alt="ALB tokens in space"
             class-name="alb-stars absolute min-w-1920px max-w-1920px transform translate-y-0"
+          /> -->
+          <AppImgSequence
+            sequence="alb"
+            id="alb-sequence"
+            class="mx-auto translate-y-[0%] max-w-[70%] transform translate-y-[20%]"
+            :width="1920"
+            :height="1080"
           />
-          <AppImg
+          <!-- <AppImg
             src="/img/meet-alb.png"
             alt="Meet ALB Token on AlienBase"
             class-name="alb-token absolute min-w-1920px max-w-1920px transform translate-y-[0%]"
-          />
+          /> -->
         </div>
       </div>
       <main
@@ -426,6 +440,10 @@
 </template>
 
 <script lang="ts" setup>
+import { gsap } from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+let gsapContext;
+
 import IconsArea51Text from "@/components/Icons/Area51Text.vue";
 
 import IcOutlineArrowForward from "~icons/ic/outline-arrow-forward";
@@ -469,10 +487,10 @@ useHead({
     lang: "en",
   },
   script: [
-    {
+    /* {
       src: "/js/animations.js",
       tagPosition: "bodyClose",
-    },
+    }, */
   ],
 });
 
@@ -780,6 +798,7 @@ const scrollPrev = () => {
 };
 
 onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger);
   refreshData();
   const farmsContainer = document.querySelector(
     ".farms-scroll-container"
@@ -788,6 +807,183 @@ onMounted(() => {
     const container = e.target as HTMLElement;
     farmScrollPosition.value = container.scrollLeft;
     /* console.log(farmScrollPosition.value, container.getBoundingClientRect()); */
+  });
+
+  gsapContext = gsap.context((self) => {
+    gsap.from(".hero-illustration", {
+      opacity: 0,
+      stagger: 0.5,
+      delay: 1,
+      duration: 0.5,
+    });
+
+    gsap.from("h1", {
+      y: 30,
+      opacity: 0,
+      stagger: 0.05,
+      delay: 0.05,
+      duration: 0.5,
+    });
+
+    gsap.from(".h1-paragraph", {
+      y: -20,
+      opacity: 0,
+      stagger: 0.5,
+      delay: 0.5,
+      duration: 1,
+    });
+
+    gsap.from(".hero-cta", {
+      y: -20,
+      opacity: 0,
+      delay: 1,
+      duration: 0.5,
+    });
+
+    gsap.from(".trade-confident span", {
+      y: 20,
+      opacity: 0,
+      stagger: 0.05,
+      delay: 0.05,
+      duration: 0.1,
+      scrollTrigger: {
+        trigger: ".trade-trigger",
+        start: "end bottom-=100px",
+        end: "start+=100px center",
+        scrub: true,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".journey-star", {
+      y: "30px",
+      opacity: 0,
+      duration: 0.6,
+      delay: 1.4,
+    });
+
+    gsap.from(".earn-feature", {
+      y: 100,
+      opacity: 0,
+      duration: 1.5,
+      scrollTrigger: {
+        trigger: ".cards-trigger",
+        start: "top bottom",
+        end: "top+=300px center",
+        scrub: true,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".farm-feature", {
+      x: -100,
+      opacity: 0,
+      duration: 2,
+      delay: 0.5,
+      scrollTrigger: {
+        trigger: ".cards-trigger",
+        start: "20% center+=100px",
+        end: "60% 80%",
+        scrub: 1,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".dual-rewards-feature", {
+      x: 100,
+      opacity: 0,
+      duration: 3,
+      delay: 1,
+      scrollTrigger: {
+        trigger: ".cards-trigger",
+        start: "center-=200px center+=100px",
+        end: "bottom bottom",
+        scrub: 1.5,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".stake-feature", {
+      x: 100,
+      opacity: 0,
+      duration: 2,
+      scrollTrigger: {
+        trigger: ".cards-trigger",
+        start: "center-=200px center+=100px",
+        end: "bottom bottom",
+        scrub: true,
+        /* markers: true, */
+      },
+    });
+
+    gsap.to(".alb-stars", {
+      y: "-30%",
+      scale: "1.07",
+      duration: 3,
+      scrollTrigger: {
+        trigger: ".alb-stars-trigger",
+        start: "top-=40px bottom",
+        end: "bottom top",
+        scrub: 2,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".alb-token", {
+      scale: ".8",
+      duration: 3,
+      scrollTrigger: {
+        trigger: ".alb-stars-trigger",
+        start: "top-=40px bottom",
+        end: "bottom top",
+        scrub: 2,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".partners .partner", {
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      delay: 0.5,
+      stagger: 0.5,
+      scrollTrigger: {
+        trigger: ".partners-trigger",
+        start: "top-=100px center",
+        end: "center center-=100px",
+        scrub: 1,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".footer-cta", {
+      y: -30,
+      opacity: 0,
+      duration: 1,
+      delay: 0.2,
+      stagger: 0.5,
+      scrollTrigger: {
+        trigger: "footer",
+        start: "top+=100px bottom",
+        end: "top-=150px 60%",
+        scrub: 1,
+        /* markers: true, */
+      },
+    });
+
+    gsap.from(".footer-illustration", {
+      opacity: 0,
+      duration: 1,
+      delay: 0.2,
+      stagger: 0.5,
+      scrollTrigger: {
+        trigger: "footer",
+        start: "top+=100px bottom",
+        end: "top-=150px 60%",
+        scrub: 1,
+        /* markers: true, */
+      },
+    });
   });
 
   if (farmsData.value?.highestApr == 0) {

@@ -31,12 +31,12 @@ export default defineNuxtConfig({
         {
           src: "https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js",
         },
-        {
+        /* {
           src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js",
         },
         {
           src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/ScrollTrigger.min.js",
-        },
+        }, */
         {
           src: "/js/lenis.js",
           tagPosition: "bodyClose",
@@ -51,5 +51,8 @@ export default defineNuxtConfig({
         types: ["unplugin-icons/types/vue"],
       },
     },
+  },
+  build: {
+    transpile: ['gsap'],
   },
 });
