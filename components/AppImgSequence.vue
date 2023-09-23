@@ -20,8 +20,11 @@ interface Props {
   sequence: string;
   width: number;
   height: number;
+  loop?: boolean;
 }
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  loop: true,
+});
 
 const scope = ref();
 
@@ -41,7 +44,7 @@ const canvas = ref<HTMLCanvasElement>();
 
 let interval: NodeJS.Timeout;
 
-const render = () => {
+const renderLoop = () => {
   if (seq.frame < frameCount && !seq.backwards) {
     seq.frame += 1;
   } else if (seq.frame > 0 && seq.backwards) {
@@ -51,6 +54,12 @@ const render = () => {
   } else if (seq.frame == 0 && seq.backwards) {
     setTimeout(() => (seq.backwards = false), 500);
   }
+  context.clearRect(0, 0, props.width, props.height);
+  context.drawImage(images[seq.frame], 0, 0);
+};
+
+const render = () => {
+  if (seq.frame < frameCount) seq.frame += 1;
   context.clearRect(0, 0, props.width, props.height);
   context.drawImage(images[seq.frame], 0, 0);
 };
@@ -69,22 +78,39 @@ onMounted(() => {
   }
 
   gsapContext = gsap.context((self) => {
-    gsap.to(seq, {
-      frame: () => (seq.backwards ? 0 : frameCount),
-      snap: "frame",
-      ease: "none",
-      duration: 1,
-      onStart: () => {
-        interval = setInterval(render, 60);
-      },
-      onComplete: () => {},
-      scrollTrigger: {
-        trigger: `canvas#${props.id}`,
-        start: "top bottom",
-        end: "bottom center",
-        /* markers: true, */
-      },
-    });
+    if (props.loop) {
+      gsap.to(seq, {
+        frame: () => (seq.backwards ? 0 : frameCount),
+        snap: "frame",
+        ease: "none",
+        duration: 1,
+        onStart: () => {
+          interval = setInterval(renderLoop, 60);
+        },
+        onComplete: () => {},
+        scrollTrigger: {
+          trigger: `canvas#${props.id}`,
+          start: "top bottom",
+          end: "bottom center",
+          /* markers: true, */
+        },
+      });
+    } else {
+      gsap.to(seq, {
+        frame: frameCount - 1,
+        snap: "frame",
+        ease: "none",
+        duration: 1.5,
+        scrollTrigger: {
+          trigger: `canvas#${props.id}`,
+          start: "top bottom",
+          end: "bottom center",
+          /* markers: true, */
+          scrub: 0.1,
+        },
+        onUpdate: render,
+      });
+    }
   }, scope.value);
 
   images[0].onload = render;

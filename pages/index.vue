@@ -123,6 +123,7 @@
         <div
           class="farms-scroll-container pt-60px default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
         >
+          <!-- <PlaceholderFarmCard v-for="i in 10" :key="i" /> -->
           <FarmCard
             :name="farm.name"
             :icons="farm.icons"
@@ -243,6 +244,7 @@
           /> -->
           <AppImgSequence
             sequence="alb"
+            :loop="false"
             id="alb-sequence"
             class="mx-auto translate-y-[0%] max-w-[70%] transform translate-y-[20%]"
             :width="1920"
