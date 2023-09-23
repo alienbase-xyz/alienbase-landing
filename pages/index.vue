@@ -185,14 +185,14 @@
       class="area-51-trigger w-full default-layout-padding flex flex-col items-center justify-start gap-42px"
     >
       <div class="img-container">
-        <AppImgSequence
+        <!-- <AppImgSequence
           sequence="meme"
           id="meme-sequence"
           class="max-w-[424px] <lg:max-w-300px"
           :width="620"
           :height="634"
-        />
-        <!-- <AppImg src="/img/meet-a51.png" alt="Meet Area51" /> -->
+        /> -->
+        <AppImg src="/img/meet-a51.png" alt="Meet Area51" />
       </div>
       <header
         class="w-full flex flex-col md:items-center justify-start gap-20px md:text-center"
@@ -231,22 +231,22 @@
         style="z-index: -1"
       >
         <div class="relative w-full max-w-1920px h-1067px">
-          <!-- <AppImg
+          <AppImg
             src="/img/meet-alb-details.png"
             alt="ALB tokens in space"
             class-name="alb-stars absolute min-w-1920px max-w-1920px transform translate-y-0"
-          /> -->
-          <AppImgSequence
+          />
+          <AppImg
+            src="/img/meet-alb.png"
+            alt="Meet ALB Token on AlienBase"
+            class-name="alb-token absolute min-w-1920px max-w-1920px transform translate-y-[0%]"
+          />
+          <!-- <AppImgSequence
             sequence="alb"
             id="alb-sequence"
             class="mx-auto translate-y-[0%] max-w-[70%] transform translate-y-[20%]"
             :width="1920"
             :height="1080"
-          />
-          <!-- <AppImg
-            src="/img/meet-alb.png"
-            alt="Meet ALB Token on AlienBase"
-            class-name="alb-token absolute min-w-1920px max-w-1920px transform translate-y-[0%]"
           /> -->
         </div>
       </div>
