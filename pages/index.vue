@@ -916,19 +916,6 @@ onMounted(() => {
       },
     });
 
-    gsap.to(".alb-stars", {
-      y: "-30%",
-      scale: "1.07",
-      duration: 3,
-      scrollTrigger: {
-        trigger: ".alb-stars-trigger",
-        start: "top-=40px bottom",
-        end: "bottom top",
-        scrub: 2,
-        /* markers: true, */
-      },
-    });
-
     gsap.from(".alb-token", {
       scale: ".8",
       duration: 3,

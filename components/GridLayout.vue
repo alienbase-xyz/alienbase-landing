@@ -9,18 +9,18 @@
       to="https://app.alienbase.xyz/"
       class="earn-feature md:(h-420px gap-0px) <md:gap-20px flex flex-col items-center justify-center"
     >
-      <!-- <AppImg
+      <AppImg
         src="/webp/earn.webp"
         alt="Earn ALB Token on AlienBase"
         class-name="w-full"
-      /> -->
-      <AppImgSequence
+      />
+      <!-- <AppImgSequence
         sequence="earn"
         id="earn-sequence"
         class="w-full"
         :width="1876"
         :height="494"
-      />
+      /> -->
       <header
         class="max-w-450px flex flex-col items-center justify-start gap-8px text-center"
       >
@@ -41,18 +41,18 @@
         to="https://app.alienbase.xyz/farms"
         class="farm-feature md:h-660px flex flex-col items-center jusitfy-center gap-48px"
       >
-        <!-- <AppImg
+        <AppImg
           src="/webp/farm.webp"
           alt="Farm ALB Token on AlienBase"
           class-name="w-full"
-        /> -->
-        <AppImgSequence
+        />
+        <!-- <AppImgSequence
           sequence="farm"
           id="farm-sequence"
           class="w-full"
           :width="964"
           :height="964"
-        />
+        /> -->
         <header
           class="max-w-335px flex flex-col items-center justify-start gap-8px text-center"
         >
@@ -73,18 +73,18 @@
           :padding-bottom="false"
           class="stake-feature md:h-320px flex flex-col items-start justify-center gap-48px"
         >
-          <!-- <AppImg
+          <AppImg
             src="/webp/stake.webp"
             alt="Stake ALB Token on AlienBase"
             class-name="w-full"
-          /> -->
-          <AppImgSequence
+          />
+          <!-- <AppImgSequence
             sequence="stake"
             id="stake-sequence"
             class="max-w-[140px]"
             :width="402"
             :height="434"
-          />
+          /> -->
           <Typo role="h2">STAKE</Typo>
         </GridCard>
         <GridCard
@@ -96,18 +96,18 @@
           :padding-bottom="false"
           class="dual-rewards-feature md:h-320px flex flex-col items-start justify-between gap-48px"
         >
-          <!-- <AppImg
+          <AppImg
             src="/webp/rewards.webp"
             alt="Get Dual-Farm Rewards on AlienBase"
             class-name="w-full"
-          /> -->
-          <AppImgSequence
+          />
+          <!-- <AppImgSequence
             sequence="dual"
             id="dual-sequence"
             class="max-w-[140px]"
             :width="406"
             :height="406"
-          />
+          /> -->
           <Typo role="h2">DUAL FARM REWARDS</Typo>
         </GridCard>
       </div>
