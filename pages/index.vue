@@ -122,8 +122,27 @@
       <div class="w-full max-w-screen relative">
         <div
           class="farms-scroll-container pt-60px default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
+          v-if="!farmsData?.farms.length"
         >
-          <!-- <PlaceholderFarmCard v-for="i in 10" :key="i" /> -->
+          <PlaceholderFarmCard v-for="i in 10" :key="i" />
+          <!-- <FarmCard
+            :name="farm.name"
+            :icons="farm.icons"
+            :multipler="farm.multiplier"
+            earn="alb"
+            :liquidity="Number(farm.liquidity)"
+            :rewards="farm.reward"
+            :apr="farm.apr"
+            :contract="farm.contract"
+            :to="farm.link"
+            v-for="(farm, i) in farmsData?.farms"
+            :key="i"
+          /> -->
+        </div>
+        <div
+          class="farms-scroll-container pt-60px default-layout-padding pb-16px overflow-x-auto w-full flex flex-row items-start jusitfy-start gap-20px w-full"
+          v-else
+        >
           <FarmCard
             :name="farm.name"
             :icons="farm.icons"
@@ -167,6 +186,13 @@
         <div
           class="navigator flex flex-row items-center justify-end gap-12px absolute top-0 right-18px"
         >
+          <div
+            v-if="!farmsData?.farms.length"
+            class="prev cursor-pointer rounded-100px w-44px h-44px border-1px border-outline grid place-items-center text-headline hover:(bg-outline)"
+            @click="() => refreshFarms()"
+          >
+            <IcOutlineSync />
+          </div>
           <div
             class="prev cursor-pointer rounded-100px w-44px h-44px border-1px border-outline grid place-items-center text-headline hover:(bg-outline)"
             @click="scrollPrev"
@@ -448,6 +474,7 @@ let gsapContext;
 
 import IconsArea51Text from "@/components/Icons/Area51Text.vue";
 
+import IcOutlineSync from "~icons/ic/outline-sync";
 import IcOutlineArrowForward from "~icons/ic/outline-arrow-forward";
 import IcOutlineArrowBackward from "~icons/ic/outline-arrow-back";
 
@@ -589,6 +616,7 @@ const {
   status: albLiqStatus,
   refresh: refreshAlbLiq,
 } = await useAsyncData(
+  "alb-liquidity",
   (_) =>
     $fetch(
       "https://api.dexscreener.com/latest/dex/tokens/0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4"
@@ -657,13 +685,13 @@ const {
   data: farmsData,
   status: farmStatus,
   refresh: refreshFarms,
+  error: farmsErr,
 } = await useAsyncData(
   "alb-farms",
   (_) =>
     $fetch(
       "https://4nsrsfaan2.execute-api.eu-central-1.amazonaws.com/prod/farms",
       {
-        retry: 3,
         mode: "no-cors",
         onRequestError: (e) => {
           console.log(e);
@@ -672,7 +700,7 @@ const {
     ),
   {
     immediate: true,
-    transform: (v: object[]): void | FarmsData => {
+    transform: (v: any[]): void | FarmsData => {
       const farms = v.map(
         (el: any): ALBFarm => ({
           pid: el.pid,
