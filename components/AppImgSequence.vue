@@ -17,7 +17,6 @@ let context: CanvasRenderingContext2D;
 interface Props {
   id: string;
   class?: string | object;
-  loop?: boolean;
   sequence: string;
   width: number;
   height: number;
@@ -74,9 +73,16 @@ onMounted(() => {
       frame: () => (seq.backwards ? 0 : frameCount),
       snap: "frame",
       ease: "none",
-      duration: 2,
+      duration: 1,
       onStart: () => {
-        interval = setInterval(render, 15);
+        interval = setInterval(render, 60);
+      },
+      onComplete: () => {},
+      scrollTrigger: {
+        trigger: `canvas#${props.id}`,
+        start: "top bottom",
+        end: "bottom center",
+        /* markers: true, */
       },
     });
   }, scope.value);
