@@ -208,7 +208,7 @@
           class="text-18px text-headline font-bold max-w-350px md:max-w-500px uppercase leading-[120%]"
           stlye="letter-spacing: -3px;"
         >
-          The safe(r) place for earthlings to trade memecoins
+          The safe(r) place for earthlings to trade microcap tokens
         </h2>
         <Typo role="body" class-name="max-w-400px text-body">
           Humans are prone to violence. We created a place where you can trade
