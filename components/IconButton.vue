@@ -37,7 +37,7 @@ button {
     @apply max-h-44px h-44px;
 
     .icon-container {
-      @apply px-12px;
+      @apply px-11px py-10px;
     }
   }
 
