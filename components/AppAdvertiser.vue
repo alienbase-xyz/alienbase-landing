@@ -35,7 +35,7 @@
       </div>
     </main>
     <button
-      class="w-34px h-34px grid place-items-center md:(absolute right-18px top-[50%] transform translate-x-[-50%] translate-y-[-50%])"
+      class="w-34px h-34px grid place-items-center md:(absolute right-18px top-[50%] transform translate-x-[0%] translate-y-[-50%])"
       @click="menu.untoggleAdveriser"
     >
       <IconsCross />
