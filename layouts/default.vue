@@ -9,7 +9,13 @@
     <AppImg
       src="/webp/hero-illustration.webp"
       alt="Alien Blue Light"
-      class="hero-illustration absolute pointer-events-none select-none top-0 left-[50%] transform translate-x-[-50%] <md:(w-954px translate-y-[26%]) md:w-2154px <lg:(translate-y-[-17%]) <xl:translate-y-[-15%] xl:(w-2514px translate-y-[-21%])"
+      class="hero-illustration absolute pointer-events-none select-none top-0 left-[50%] transform translate-x-[-50%]"
+      :class="{
+        '<md:(w-954px translate-y-[26%]) md:w-2154px <lg:(translate-y-[-17%]) <xl:translate-y-[-15%] xl:(w-2514px translate-y-[-21%])':
+          !menu.advertiser,
+        '<md:(w-954px translate-y-[35%]) <sm:translate-y-[38%] md:w-2154px <lg:(translate-y-[-13%]) <xl:translate-y-[-11%] xl:(w-2514px translate-y-[-17%])':
+          menu.advertiser,
+      }"
       v-if="$route.name == 'index'"
     />
     <AppAdvertiser />
@@ -25,7 +31,11 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useMenuStore } from "~/stores/menu";
+
+const menu = useMenuStore();
+</script>
 
 <style lang="scss" scoped>
 /* .layout-container {
