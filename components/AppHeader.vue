@@ -60,8 +60,12 @@
   </div>
 
   <div
-    class="cta-container h-100px grid place-items-center px-18px fixed top-0 right-0"
-    style="z-index: 999"
+    class="cta-container h-100px flex flex-row items-center justify-end px-18px fixed right-0"
+    :class="{
+      'top-70px': scrollY < 20 && menu.advertiser,
+      'top-0': scrollY > 10 || !menu.advertiser,
+    }"
+    style="z-index: 999; transition: top 0.2s"
   >
     <button
       class="menu-wrapper min-w-44px w-44px h-44px rounded-10px grid place-items-center cursor-pointer lg:hidden"
@@ -91,6 +95,14 @@ import { useMenuStore } from "@/stores/menu";
 
 const links = ref(NavConfigs);
 const menu = useMenuStore();
+
+const scrollY = ref(0);
+
+onMounted(() => {
+  window.addEventListener("scroll", (_) => {
+    scrollY.value = window.scrollY;
+  });
+});
 </script>
 
 <style lang="scss" scoped>
