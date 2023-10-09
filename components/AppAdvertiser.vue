@@ -3,7 +3,10 @@
     class="w-screen relative h-70px flex flex-row items-end justify-center <md:(items-center justify-between) default-layout-padding"
     v-if="menu.advertiser"
   >
-    <main class="flex flex-row items-center justify-center gap-20px">
+    <NuxtLink
+      to="https://area51.alienbase.xyz/prediction"
+      class="flex flex-row items-center justify-center gap-20px"
+    >
       <div class="cup-container">
         <AppImg src="/img/cup.png" alt="Predictions are live on Area 51" />
       </div>
@@ -23,8 +26,11 @@
             Predictions are live on Area 51
           </p>
         </div>
-        <NuxtLink to="https://area51.alienbase.xyz/" title="Predict Now">
-          <AppButton type="area-51" small>Predict Now</AppButton>
+        <NuxtLink
+          to="https://area51.alienbase.xyz/prediction"
+          title="Predict Now"
+        >
+          <AppButton type="area-51" small>Predict now</AppButton>
         </NuxtLink>
       </div>
       <div class="cup-container">
@@ -33,7 +39,7 @@
           alt="Predictions are live on Area 51"
         />
       </div>
-    </main>
+    </NuxtLink>
     <button
       class="w-34px h-34px grid place-items-center md:(absolute right-18px top-[50%] transform translate-x-[0%] translate-y-[-50%])"
       @click="menu.untoggleAdveriser"
