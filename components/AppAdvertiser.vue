@@ -5,6 +5,7 @@
   >
     <NuxtLink
       to="https://area51.alienbase.xyz/prediction"
+      title="Predict now"
       class="flex flex-row items-center justify-center gap-20px"
     >
       <div class="cup-container">
