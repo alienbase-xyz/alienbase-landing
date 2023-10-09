@@ -68,29 +68,19 @@ button {
   }
 
   &.area-51 {
+    box-shadow: rgba(191, 151, 255, 0.44) 0px 0px 12px 0px inset;
+    border: 1px solid rgb(127, 107, 173);
     background: linear-gradient(
-        180deg,
-        rgba(60, 8, 126, 0.46) 0%,
-        rgba(60, 8, 126, 0.94) 100%
-      ),
-      linear-gradient(180deg, #7f6bad 0%, #7658ab 100%);
-    border: 1px solid;
-
-    border-image-source: linear-gradient(180deg, #7f6bad 0%, #7658ab 100%);
-    box-shadow: 0px 0px 12px 0px rgba(191, 151, 255, 0.44) inset;
+      rgba(60, 8, 126, 0.46) 0%,
+      rgba(60, 8, 126, 0.94) 100%
+    );
 
     &.small {
-      @apply px-20px py-12px;
+      @apply px-20px pt-15px pb-16px h-44px;
     }
 
     &:hover {
-      background: linear-gradient(
-          180deg,
-          rgba(60, 8, 126, 0.94) 0% rgba(60, 8, 126, 0.46) 100%
-        ),
-        linear-gradient(180deg, #7658ab 0%, #7f6bad 100%);
-      border-image-source: linear-gradient(180deg, #7658ab 0%, #7f6bad 100%);
-      @apply opacity-80;
+      box-shadow: rgba(191, 151, 255, 0.7) 0px 0px 20px 0px inset;
     }
   }
 

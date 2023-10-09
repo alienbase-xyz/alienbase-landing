@@ -1,6 +1,6 @@
 <template>
   <header
-    class="w-screen h-70px flex flex-row items-end justify-center <md:(items-center justify-between) default-layout-padding"
+    class="w-screen relative h-70px flex flex-row items-end justify-center <md:(items-center justify-between) default-layout-padding"
     v-if="menu.advertiser"
   >
     <main class="flex flex-row items-center justify-center gap-20px">
@@ -8,7 +8,7 @@
         <AppImg src="/img/cup.png" alt="Predictions are live on Area 51" />
       </div>
       <div
-        class="flex flex-row items-center justify-center gap-60px <md:gap-8px"
+        class="flex flex-row items-center justify-center gap-60px <md:gap-20px"
       >
         <div
           class="flex flex-row items-center justify-start gap-15px text-headline"
@@ -19,9 +19,7 @@
           >
             Predict&Win
           </p>
-          <p
-            class="text-18px font-regular <md:(max-w-130px text-15px leading-[120%])"
-          >
+          <p class="text-18px font-regular <md:(text-14px leading-[120%])">
             Predictions are live on Area 51
           </p>
         </div>
@@ -30,10 +28,16 @@
         </NuxtLink>
       </div>
       <div class="cup-container">
-        <AppImg src="/img/cup.png" alt="Predictions are live on Area 51" />
+        <AppImg
+          src="/img/cup-reverse.png"
+          alt="Predictions are live on Area 51"
+        />
       </div>
     </main>
-    <button class="w-34px h-34px md:hidden" @click="menu.untoggleAdveriser">
+    <button
+      class="w-34px h-34px grid place-items-center md:(absolute right-18px top-[50%] transform translate-x-[-50%] translate-y-[-50%])"
+      @click="menu.untoggleAdveriser"
+    >
       <IconsCross />
     </button>
   </header>
