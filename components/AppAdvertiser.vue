@@ -1,48 +1,28 @@
 <template>
   <header
-    class="w-screen relative h-70px flex flex-row items-end justify-center <md:(items-center justify-between) default-layout-padding"
+    class="w-screen relative h-70px flex flex-row items-stretch justify-center <md:(justify-between) default-layout-padding overflow-clip"
     v-if="menu.advertiser"
   >
-    <NuxtLink
-      to="https://area51.alienbase.xyz/prediction"
-      title="Predict now"
-      class="flex flex-row items-center justify-center gap-20px"
+    <div
+      class="advertisers-container max-w-510px <md:max-w-[90%] flex flex-col items-center justify-start w-full h-140px"
+      style="transition: transform 0.5s"
+      :style="{
+        transform: `translateY(-${current * 70}px)`,
+      }"
     >
-      <div class="cup-container">
-        <AppImg src="/img/cup.png" alt="Predictions are live on Area 51" />
-      </div>
-      <div
-        class="flex flex-row items-center justify-center gap-60px <md:gap-20px"
+      <NuxtLink
+        :title="adv.alt"
+        class="flex flex-row items-center justify-center gap-20px min-h-70px max-h-70px"
+        v-for="adv in advs"
+        :key="adv.to"
+        :to="adv.to"
+        target="_blank"
       >
-        <div
-          class="flex flex-row items-center justify-start gap-15px text-headline"
-        >
-          <p
-            class="text-18px font-semibold uppercase <lg:hidden"
-            style="font-family: 'Syncopate', sans-serif"
-          >
-            Predict&Win
-          </p>
-          <p class="text-18px font-regular <md:(text-14px leading-[120%])">
-            Predictions are live on Area 51
-          </p>
-        </div>
-        <NuxtLink
-          to="https://area51.alienbase.xyz/prediction"
-          title="Predict Now"
-        >
-          <AppButton type="area-51" small>Predict now</AppButton>
-        </NuxtLink>
-      </div>
-      <div class="cup-container">
-        <AppImg
-          src="/img/cup-reverse.png"
-          alt="Predictions are live on Area 51"
-        />
-      </div>
-    </NuxtLink>
+        <AppImg :src="adv.img" :alt="adv.alt" />
+      </NuxtLink>
+    </div>
     <button
-      class="w-34px h-34px grid place-items-center md:(absolute right-18px top-[50%] transform translate-x-[0%] translate-y-[-50%])"
+      class="w-34px h-34px grid my-auto place-items-center md:(absolute right-18px top-[50%] transform translate-x-[0%] translate-y-[-50%])"
       @click="menu.untoggleAdveriser"
     >
       <IconsCross />
@@ -51,9 +31,26 @@
 </template>
 
 <script lang="ts" setup>
+import { ADVS } from "~/configs/NavConfig";
 import { useMenuStore } from "~/stores/menu";
 
+const advs = ref(ADVS);
+const current = ref(0);
+
 const menu = useMenuStore();
+
+let interval: NodeJS.Timeout;
+
+onMounted(() => {
+  interval = setInterval(() => {
+    current.value =
+      current.value == advs.value.length - 1 ? 0 : current.value + 1;
+  }, 5000);
+});
+
+onUnmounted(() => {
+  clearInterval(interval);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -64,9 +61,5 @@ header {
     #8049fe 21.72%,
     #030014 85.23%
   );
-}
-
-.cup-container {
-  @apply max-w-86px <md:hidden;
 }
 </style>

@@ -403,6 +403,7 @@
         <RoadmapWrapper />
       </div>
     </section>
+    <Blog />
     <section
       class="partners-trigger w-full flex flex-col items-center justify-center gap-40px default-layout-padding"
     >

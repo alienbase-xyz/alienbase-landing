@@ -20,3 +20,15 @@ export const NavConfigs = [
         to: "https://t.me/alienbaseDEX",
     }
 ]
+
+export const ADVS = [
+    {
+        to: "https://area51.alienbase.xyz/lottery",
+        img: "/img/advertising/lottery.png",
+        alt: "Play Lottery Now!"
+    }, {
+        to: "https://area51.alienbase.xyz/prediction",
+        img: "/img/advertising/prediction.png",
+        alt: "Play Predictions Now!"
+    },
+]
