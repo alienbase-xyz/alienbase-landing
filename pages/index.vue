@@ -392,7 +392,7 @@
       >
         <p class="text-32px text-headline font-medium">Roadmap</p>
         <p class="text-18px text-body font-medium leading-[140%]">
-          We landed on Earh, but we're going to the Moon
+          We landed on Earth, but we're going to the Moon
         </p>
       </header>
       <div class="wrapper w-full grid place-items-center overflow-clip">
@@ -753,7 +753,7 @@ const ALBData = computed(() => [
     },
     {
       name: "Current emmission",
-      value: "8/sec",
+      value: "10.5/sec",
     },
   ],
 ]);
